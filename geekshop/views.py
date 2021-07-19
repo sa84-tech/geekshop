@@ -2,8 +2,20 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'geekshop/index.html')
+    title = 'магазин'
+    content = {
+        'title': title
+    }
+
+    print(request.resolver_match)
+    return render(request, 'geekshop/index.html', content)
 
 
 def contacts(request):
-    return render(request, 'geekshop/contact.html')
+    title = 'контакты'
+    content = {
+        'title': title
+    }
+
+    print(request.resolver_match)
+    return render(request, 'geekshop/contact.html', content)
