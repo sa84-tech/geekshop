@@ -1,19 +1,20 @@
 from django.shortcuts import render
 
+from geekshop.utils import get_data
+
 
 def index(request):
-    print(request.resolver_match)
+
     title = 'каталог'
-    menu_items = [
-        {'href': 'index', 'name': 'все'},
-        {'href': 'index', 'name': 'дом'},
-        {'href': 'index', 'name': 'офис'},
-        {'href': 'index', 'name': 'модерн'},
-        {'href': 'index', 'name': 'классика'},
-    ]
-    content = {
+
+    menu_items = get_data('categories')
+
+    products = get_data('products')[:3]
+
+    context = {
         'title': title,
         'menu_items': menu_items,
+        'products': products,
     }
 
-    return render(request, 'mainapp/products.html', content)
+    return render(request, 'mainapp/products.html', context)
