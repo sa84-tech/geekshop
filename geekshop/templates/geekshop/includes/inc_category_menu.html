@@ -1,10 +1,14 @@
 <div class="links clearfix">
 
     <ul class="links-menu">
-    {% for item in menu_items %}
-      <li>
-          <a href="{% url item.href %}">{{item.name}}</a>
-      </li>
-    {% endfor %}
-  </ul>
+        <li>
+            <a href="#">Все</a>
+        </li>
+        {% for item in menu_items %}
+            <li>
+                <a href="#">{{item.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
 </div>

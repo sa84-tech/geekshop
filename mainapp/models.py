@@ -54,7 +54,12 @@ class Product(models.Model):
         default=0,
     )
 
-from django.db import models
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
 
 
 class Contact(models.Model):
@@ -77,3 +82,10 @@ class Contact(models.Model):
         max_length=256,
         blank=True,
     )
+
+    def __str__(self):
+        return self.location
+
+    class Meta:
+        verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'

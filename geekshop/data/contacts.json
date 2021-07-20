@@ -8,13 +8,13 @@
     {
         "location": "Санкт-Петербург",
         "phone": "(812) 444-45-45",
-        "email": "moscow@geekshop.ru",
+        "email": "spb@geekshop.ru",
         "address": "Невский проспект, 35"
     },
     {
         "location": "Екатеринбург",
         "phone": "(343) 333-44-44",
-        "email": "moscow@geekshop.ru",
+        "email": "eburg@geekshop.ru",
         "address": "улица Вайнера, 9"
     }
 ]
