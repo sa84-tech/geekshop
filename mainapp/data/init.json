@@ -1,0 +1,75 @@
+{
+    "categories": [
+        {"name": "дом", "description": "все для дома"},
+        {"name": "офис", "description": "все для офиса"},
+        {"name": "модерн", "description": "мебель в стиле модерн"},
+        {"name": "классика", "description": "мебель в классическом стиле"}
+    ],
+    "products": [
+        {
+            "name": "дизайнерский светильник Аркадий",
+            "category": "дом",
+            "image": "products_images/product-11.jpg",
+            "short_desc": "светильник",
+            "description": "это надо видеть",
+            "price": "15500.00",
+            "quantity": 10
+        },
+        {
+            "name": "стул повышенного качества",
+            "category": "офис",
+            "image": "products_images/product-21.jpg",
+            "short_desc": "",
+            "description": "не оторваться",
+            "price": "4500.00",
+            "quantity": 10
+        },
+        {
+            "name": "торшер обыкновенный",
+            "category": "классика",
+            "image": "products_images/product-31.jpg",
+            "short_desc": "",
+            "description": "огонь",
+            "price": "11000.00",
+            "quantity": 10
+        },
+        {
+            "name": "лампа декоративная Попутчица",
+            "category": "дом",
+            "image": "products_images/product-1.jpg",
+            "short_desc": "",
+            "description": "не оторваться",
+            "price": "1550.00",
+            "quantity": 10
+        },
+        {
+            "name": "комплект стульев Недотрога",
+            "category": "модерн",
+            "image": "products_images/product-2.jpg",
+            "short_desc": "",
+            "description": "бери два",
+            "price": "25350.00",
+            "quantity": 10
+        }
+    ],
+    "contacts": [
+        {
+            "location": "Москва",
+            "phone": "(495) 555-44-44",
+            "email": "moscow@geekshop.ru",
+            "address": "в пределах МКАД"
+        },
+        {
+            "location": "Санкт-Петербург",
+            "phone": "(812) 444-45-45",
+            "email": "spb@geekshop.ru",
+            "address": "Невский проспект, 35"
+        },
+        {
+            "location": "Екатеринбург",
+            "phone": "(343) 333-44-44",
+            "email": "eburg@geekshop.ru",
+            "address": "улица Вайнера, 9"
+        }
+    ]
+}
