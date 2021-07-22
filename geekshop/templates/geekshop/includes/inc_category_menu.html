@@ -2,11 +2,11 @@
 
     <ul class="links-menu">
         <li>
-            <a href="#">Все</a>
+            <a href="{% url 'products:index' %}">Все</a>
         </li>
         {% for item in menu_items %}
             <li>
-                <a href="#">{{item.name}}</a>
+                <a href="{% url 'products:category' item.id %}">{{item.name}}</a>
             </li>
         {% endfor %}
     </ul>

@@ -61,9 +61,10 @@
 					<div class="block">
 						<a href="#"><img src="/media/{{ product.image }}" alt="">
 							<div class="text">
+								<h3>{{ product.category.name }}</h3>
 								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
 								<h4>{{ product.name|capfirst }}</h4>
-								<p>{{ product.short_desc }}</p>
+								<p>{{ product.description }}</p>
 							</div>
 						</a>
 					</div>
