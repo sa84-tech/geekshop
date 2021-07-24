@@ -21,10 +21,11 @@ from django.conf.urls.static import static
 from geekshop.views import index, contacts
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('products/', include('mainapp.urls', namespace='products'), name='products'),
     path('', index, name='index'),
+    path('admin/', admin.site.urls),
     path('contact/', contacts, name='contacts'),
+    path('products/', include('mainapp.urls', namespace='products'), name='products'),
+    path('auth/', include('authapp.urls', namespace='auth'))
 ]
 
 if settings.DEBUG:
