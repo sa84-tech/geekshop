@@ -1,0 +1,20 @@
+ul {
+    list-style: none;
+}
+
+.list-group > li {
+    margin-bottom: 1rem;
+}
+
+.list-group label {
+    font-size: 0.9rem;
+    color: gray;
+    margin-bottom: 0.3rem;
+}
+
+.errorlist {
+    font-size: 0.75rem;
+    color: red;
+    padding-left: 1rem;
+}
+
