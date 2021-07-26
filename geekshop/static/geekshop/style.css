@@ -46,15 +46,15 @@ html, body {
 	display: flex;
 	align-items: center;
 }
-.menu li {
+.menu > li {
 	float: left;
 }
 
-.menu li.auth {
+.menu > li.auth {
 	margin-left: 2rem;
 }
 .menu a,
-.menu .dropdown .btn {
+.menu .dropdown > .btn {
 	color: #8c8c8c;
 	font-size: 14px;
 	font-weight: 700;
@@ -68,34 +68,35 @@ html, body {
 	font-weight: 700;
 	border-bottom: 3px solid #212121;
 }
-.menu a:hover {
+.menu li > a:hover {
 	color: #212121;
 	font-weight: 700;
 	border-bottom: 3px solid #212121;
 }
-.menu a:active {
+.menu li > a:active {
 	color: #8c8c8c;
 	font-weight: 700;
 	border-bottom: 3px solid #212121;
 }
 
-.search {
-	display: block;
-	width: 23px;
-	height: 23px;	
-	background-image: url(img/search.png);
-	position: absolute;
-	top: 63px;
-	left: 1176px;
+a.inline-block: {
+    color: red !important;
+    display: inline;
 }
+
 .basket {
 	display: block;
-	width: 23px;
+	font-size: 23px;
 	height: 23px;	
-	background-image: url(img/basket.png);
+	color: #8c8c8c;
 	position: absolute;
 	top: 63px;
 	left: 1210px;
+}
+
+.basket:active,
+.basket:hover {
+    color: #1c1c1c;
 }
 
 .clearfix:after {
