@@ -1,18 +1,18 @@
-ul {
+form ul {
     list-style: none;
 }
 
-.list-group > li {
+form .list-group > li {
     margin-bottom: 1rem;
 }
 
-.list-group label {
+form .list-group label {
     font-size: 0.9rem;
     color: gray;
     margin-bottom: 0.3rem;
 }
 
-.errorlist {
+form .errorlist {
     font-size: 0.75rem;
     color: red;
     padding-left: 1rem;
