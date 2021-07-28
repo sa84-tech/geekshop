@@ -1,9 +1,13 @@
 from django.shortcuts import render
 
-from .models import Product, ProductCategory, Contact
+from .models import Product, ProductCategory
+from cartapp.models import Cart
 
 
 def product_list(request, pk=None):
+    if request.user.is_authenticated:
+        count = Cart.count(request.user)
+
     print(pk)
     title = 'каталог'
     menu_items = ProductCategory.objects.all()
@@ -17,6 +21,7 @@ def product_list(request, pk=None):
         'title': title,
         'menu_items': menu_items,
         'products': products,
+        'count': count | 0,
     }
 
     return render(request, 'mainapp/product_list.html', context)

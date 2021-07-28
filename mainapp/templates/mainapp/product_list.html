@@ -26,9 +26,12 @@
 								</div>
 							</a>
 							<h3 class="card-text">{{ product.price }} <span>&#8381;</span> </h3>
-							<button class="btn btn-secondary btn-rounded position-absolute bottom-0 end-0 m-2">
+							<btn
+								onclick="location.href='{% url 'cart:add' product.pk %}'"
+								class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
+							>
 								<i class="fa fa-cart-plus"></i>
-							</button>
+							</btn>
 						</div>
 					</div>
 				</div>

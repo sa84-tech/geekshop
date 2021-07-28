@@ -3,7 +3,7 @@
     <ul class="links-menu">
         <li>
             <a
-                href="{% url '' %}"
+                href="{% url 'products:index' %}"
                 class="{% if not request.resolver_match.kwargs.pk %}active{% endif %}"
             >
                 Все

@@ -27,5 +27,14 @@
 
 
     </ul>
-    <a href="#" class="basket"><i class="fa fa-shopping-cart"></i> </a>
+    <a href="#" class="basket">
+        <i class="fa fa-shopping-cart">
+
+        </i>
+        {% if count %}
+            <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
+                {{ count }}
+            </span>
+        {% endif %}
+    </a>
 </div>
