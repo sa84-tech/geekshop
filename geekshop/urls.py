@@ -25,7 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='panel'),
     path('contact/', contacts, name='contacts'),
     path('products/', include('mainapp.urls', namespace='products'), name='products'),
-    path('auth/', include('authapp.urls', namespace='auth'))
+    path('auth/', include('authapp.urls', namespace='auth')),
+    path('cart/', include('cartapp.urls', namespace='cart')),
 ]
 
 if settings.DEBUG:
