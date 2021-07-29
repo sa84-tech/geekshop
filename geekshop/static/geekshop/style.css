@@ -118,6 +118,7 @@ a.inline-block: {
 	position: absolute;
 	top: 63px;
 	left: 1210px;
+	text-decoration: none;
 }
 
 .basket .badge {
@@ -125,8 +126,10 @@ a.inline-block: {
 }
 
 .basket:active,
-.basket:hover {
-    color: #1c1c1c;
+.basket:hover,
+ .basket .cart-price:hover,
+ .basket .cart-price:active{
+    color: #1c1c1c !important;
 }
 
 .clearfix:after {

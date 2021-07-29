@@ -1,16 +1,15 @@
 from django.shortcuts import render
 
-from .models import Product, ProductCategory
 from cartapp.models import Cart
+from geekshop.views import get_count, get_total
+from .models import Product, ProductCategory
 
 
 def product_list(request, pk=None):
-    if request.user.is_authenticated:
-        count = Cart.count(request.user)
-
-    print(pk)
     title = 'каталог'
     menu_items = ProductCategory.objects.all()
+    product_count = get_count(request.user)
+    total_cost = get_total(request.user)
 
     if pk:
         products = Product.objects.filter(category_id=pk)[:9]
@@ -21,7 +20,8 @@ def product_list(request, pk=None):
         'title': title,
         'menu_items': menu_items,
         'products': products,
-        'count': count | 0,
+        'count': product_count,
+        'total_cost': total_cost,
     }
 
     return render(request, 'mainapp/product_list.html', context)

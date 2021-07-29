@@ -28,13 +28,15 @@
 
     </ul>
     <a href="#" class="basket">
-        <i class="fa fa-shopping-cart">
-
-        </i>
+        <i class="fa fa-shopping-cart"></i>
         {% if count %}
             <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">
                 {{ count }}
             </span>
         {% endif %}
+        {% if total_cost %}
+            <span class="ms-2 badge text-secondary fs-6 fw-normal cart-price">{{ total_cost }} &#8381;</span>
+        {% endif %}
     </a>
+
 </div>

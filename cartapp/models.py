@@ -4,7 +4,6 @@ from django.db import models
 from django.conf import settings
 
 from mainapp.models import Product
-from authapp.models import ShopUser
 
 
 class Cart(models.Model):
@@ -28,7 +27,10 @@ class Cart(models.Model):
 
     @staticmethod
     def count(user):
-        count = 0
-        for e in list(user.cart.all().values()):
-            count += e['qty']
-        return count
+        items = list(user.cart.values('qty'))
+        return reduce(lambda summ, item: summ + item['qty'], items, 0)
+
+    @staticmethod
+    def total(user):
+        items = list(user.cart.values('qty', 'product__price'))
+        return reduce(lambda summ, item: summ + item['qty'] * item['product__price'], items, 0)
