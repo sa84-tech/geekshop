@@ -13,15 +13,10 @@
 
 </head>
 <body>
-	<div class="wrapper">
-		<div class="content">
-			{% block content %}
-			{% endblock %}
-		</div>
-		<footer class="footer">
-			{% include 'geekshop/includes/inc_footer.html' %}
-		</footer>
-	</div>
+	{% block content %}
+	{% endblock %}
+
+    {% include 'geekshop/includes/inc_footer.html' %}
 
 </body>
 </html>

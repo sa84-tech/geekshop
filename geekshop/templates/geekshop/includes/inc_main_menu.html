@@ -1,4 +1,4 @@
-<div class="header clearfix">
+<div class="clearfix">
     <a href="{% url 'index' %}" class="logo"></a>
     <ul class="menu">
         <li><a href="{% url 'index' %}" class="{% if title == 'магазин' %}active{% endif %}">домой</a></li>
@@ -27,7 +27,7 @@
 
 
     </ul>
-    <a href="#" class="basket">
+    <a href="{% url 'cart:index' %}" class="basket">
         <i class="fa fa-shopping-cart"></i>
         {% if count %}
             <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger">

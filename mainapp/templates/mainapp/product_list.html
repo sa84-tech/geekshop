@@ -2,12 +2,17 @@
 {% load static %}
 
 {% block content %}
-	<div class="hero-white">
-		{% include 'geekshop/includes/inc_main_menu.html' %}
+	<div class="header">
+		<div class="base-container">
+			<div class="hero-white">
+				{% include 'geekshop/includes/inc_main_menu.html' %}
+			</div>
+		</div>
 	</div>
 
 	<section class="main">
-		{% include 'geekshop/includes/inc_category_menu.html' %}
+		<div class="base-container">
+			{% include 'geekshop/includes/inc_category_menu.html' %}
 
 		<div class="catalog">
 			<div class="title clearfix">
@@ -38,6 +43,7 @@
 				{% endfor %}
 
 			</div>
+		</div>
 		</div>
 	</section>
 
