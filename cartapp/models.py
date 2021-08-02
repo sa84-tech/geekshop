@@ -27,7 +27,8 @@ class Cart(models.Model):
 
     @property
     def product_cost(self):
-        return self.product.price * self.product.qty
+        print(self.product.price * self.qty)
+        return self.product.price * self.qty
 
     @staticmethod
     def count(user):
@@ -41,4 +42,4 @@ class Cart(models.Model):
 
     @staticmethod
     def get_cart(user):
-        return list(user.cart.values('pk', 'product__name', 'product__image', 'product__price', 'qty'))
+        return list(user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qty'))

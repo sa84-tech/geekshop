@@ -1,4 +1,4 @@
-{% extends 'geekshop/base.html' %}
+{% extends 'cartapp/base.html' %}
 {% load static %}
 
 {% block content %}
@@ -19,18 +19,35 @@
 						{% for cart_item in cart_items %}
 							<li class="list-group-item">
 								 <div class="row">
-									 <div class="col-md-3">
+									 <div class="col-md-2">
 										 <img class="img-fluid" src="/media/{{ cart_item.product__image }}" alt="">
 									 </div>
-									 <div class="col-md-3">
+									 <div class="col-md-4">
 										 {{ cart_item.product__name }}
 									 </div>
-									 <div class="col-md-2">{{ cart_item.qty }}</div>
-									 <div class="col-md-2">{{ cart_item.product__price }}<span>&#8381;</span></div>
+									 <div class="col-md-2 qty-block">
+										 <div
+										     class="qty-block__change"
+											 onclick="location.href='{% url 'cart:sub' cart_item.product %}'"
+										 >
+											 &ndash;
+										 </div>
+										 <div class="qty-block__value">{{ cart_item.qty }}</div>
+										 <div
+										     class="qty-block__change"
+										     onclick="location.href='{% url 'cart:add' cart_item.product %}'"
+										 >
+											 +
+										 </div>
+									 </div>
+									 <div class="col-md-2">{{ cart_item.product_cost }}<span>&#8381;</span></div>
 									 <div class="col-md-2">
-										 <a href="#" class="btn btn-light">
-											 <i class="fa fa-trash"></i>
-										 </a>
+										 <div
+											 class="trash-block"
+											 onclick="location.href='{% url 'cart:remove' cart_item.product %}'"
+										 >
+											 <i class="far fa-trash-alt"></i>
+										 </div>
 									 </div>
 								 </div>
 							 </li>
@@ -43,7 +60,7 @@
 					 <div class="card">
 						 <ul id="totalPrice" class="list-group">
 							 <li class="list-group-item">
-								 <h4 class="h5">Всего товаров 12 на сумму <span>{{ total_cost }}</span> <span>&#8381;</span></h4>
+								 <h4 class="h5">Всего товаров {{ count }} на сумму <span>{{ total_cost }}</span> <span>&#8381;</span></h4>
 							 </li>
 							 <li class="list-group-item">
 								 <button type="button" class="btn btn-secondary">Продолжить</button>

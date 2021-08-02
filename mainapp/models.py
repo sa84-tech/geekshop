@@ -61,6 +61,11 @@ class Product(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
+    @property
+    def split_description(self):
+        descriptions = self.description.split(';')
+        return list(map(lambda s: s.strip(), descriptions))
+
 
 class Contact(models.Model):
     location = models.CharField(

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from cartapp.models import Cart
 from geekshop.views import get_count, get_total
@@ -27,20 +27,26 @@ def product_list(request, pk=None):
     return render(request, 'mainapp/product_list.html', context)
 
 
-def product(request, pk=None):
+def product_details(request, pk=None):
     print(pk)
     title = 'каталог'
     menu_items = ProductCategory.objects.all()
 
     if pk:
-        products = Product.objects.filter(category_id=pk)[:3]
+        product = get_object_or_404(Product, pk=pk)
+        products = Product.objects.filter(category_id=product.category).exclude(pk=pk)[:3]
     else:
         products = Product.objects.all()[:3]
+
+    desc = product.split_description
+    print(desc)
 
     context = {
         'title': title,
         'menu_items': menu_items,
         'products': products,
+        'product': product,
+
     }
 
-    return render(request, 'mainapp/product_list.html', context)
+    return render(request, 'mainapp/product.html', context)
