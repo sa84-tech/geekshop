@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -18,6 +19,7 @@ def _add_cart(user, product_id):
     return cart
 
 
+@login_required
 def index(request, pk=None):
     title = 'Корзина'
     if pk:
@@ -26,28 +28,30 @@ def index(request, pk=None):
     product_count = get_count(request.user)
     total_cost = get_total(request.user)
     cart_items = Cart.get_cart(request.user)
+
     context = {
         'title': title,
         'count': product_count,
         'total_cost': total_cost,
         'cart_items': cart_items,
     }
+
+    if 'login' in request.META['HTTP_REFERER']:
+        return HttpResponseRedirect(reverse('products:index', args=[pk]))
+
     return render(request, 'cartapp/cart.html', context)
 
 
+@login_required
 def cart_add(request, pk):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('auth:login'))
-
     _add_cart(request.user, pk)
 
     # return HttpResponseRedirect(request.META['HTTP_REFERER'])
     return HttpResponseRedirect(reverse('cart:index'))
 
 
+@login_required
 def cart_remove(request, pk):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('auth:login'))
 
     cart = request.user.cart.get(product=pk)
 
@@ -56,9 +60,8 @@ def cart_remove(request, pk):
     return HttpResponseRedirect(reverse('cart:index'))
 
 
+@login_required
 def cart_sub(request, pk):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('auth:login'))
 
     cart = request.user.cart.get(product=pk)
 

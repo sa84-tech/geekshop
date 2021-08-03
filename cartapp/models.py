@@ -42,4 +42,6 @@ class Cart(models.Model):
 
     @staticmethod
     def get_cart(user):
-        return list(user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qty'))
+        cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qty')
+        cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qty']}, cart)
+        return list(cart_items)

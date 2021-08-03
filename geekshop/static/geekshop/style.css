@@ -944,17 +944,18 @@ td:first-child {
 	padding-left: 98px;
 	padding-right: 98px;
 	margin-top: 98px;
-	height: 651px;
 }
 .details-slider {
 	width: 570px;
 	float: left;
 	margin-right: 30px;
 }
+/*
 .slider-product {
 	width: 570px;
 	height: 570px;
 }
+*/
 .slider-control {
 	width: 420px;
 	height: 70px;

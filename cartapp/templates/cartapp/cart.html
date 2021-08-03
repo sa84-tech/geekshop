@@ -23,7 +23,7 @@
 										 <img class="img-fluid" src="/media/{{ cart_item.product__image }}" alt="">
 									 </div>
 									 <div class="col-md-4">
-										 {{ cart_item.product__name }}
+										 {{ cart_item.product__name|capfirst }}
 									 </div>
 									 <div class="col-md-2 qty-block">
 										 <div
@@ -40,7 +40,7 @@
 											 +
 										 </div>
 									 </div>
-									 <div class="col-md-2">{{ cart_item.product_cost }}<span>&#8381;</span></div>
+									 <div class="col-md-2">{{ cart_item.cost }}<span>&#8381;</span></div>
 									 <div class="col-md-2">
 										 <div
 											 class="trash-block"
