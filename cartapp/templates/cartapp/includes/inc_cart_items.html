@@ -1,0 +1,47 @@
+<ul id="cart-wrapper" class="list-group list-group-flush">
+						{% for cart_item in cart_items %}
+							<li class="list-group-item">
+								<div class="row">
+						 			<div class="col-md-2">
+							    		<img class="img-fluid" src="/media/{{ cart_item.product__image }}" alt="">
+									</div>
+							    	<div class="col-md-4">
+									    {{ cart_item.product__name|capfirst }}
+									</div>
+								 <div class="col-md-2 qty-block">
+									 <div
+										 class="qty-block__change sub-btn mx-2"
+										 onclick="location.href='{% url 'cart:sub' cart_item.product %}'"
+									 >
+										 &ndash;
+									 </div>
+									 <div class="qty-block__value">
+										 <input
+											 type="text"
+											 class="form-control border-0 p-0 text-center"
+											 value="{{ cart_item.qty }}"
+											 data-pk="{{ cart_item.product }}"
+										 >
+									 </div>
+									 <div
+										 class="qty-block__change mx-2 add-btn"
+										 onclick="location.href='{% url 'cart:add' cart_item.product %}'"
+									 >
+										 +
+									 </div>
+								 </div>
+								 <div class="col-md-2">{{ cart_item.cost }}<span>&#8381;</span></div>
+								 <div class="col-md-2">
+									 <div
+										 class="trash-block remove-btn"
+										 onclick="location.href='{% url 'cart:remove' cart_item.product %}'"
+									 >
+										 <i class="far fa-trash-alt"></i>
+									 </div>
+								 </div>
+									</div>
+
+							 </li>
+						 {% endfor %}
+
+					 </ul>

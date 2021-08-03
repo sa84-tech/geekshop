@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 from cartapp.models import Cart
@@ -36,9 +37,6 @@ def index(request, pk=None):
         'cart_items': cart_items,
     }
 
-    if 'login' in request.META['HTTP_REFERER']:
-        return HttpResponseRedirect(reverse('products:index', args=[pk]))
-
     return render(request, 'cartapp/cart.html', context)
 
 
@@ -46,8 +44,8 @@ def index(request, pk=None):
 def cart_add(request, pk):
     _add_cart(request.user, pk)
 
-    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    return HttpResponseRedirect(reverse('cart:index'))
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    # return HttpResponseRedirect(reverse('cart:index'))
 
 
 @login_required
@@ -72,3 +70,21 @@ def cart_sub(request, pk):
         cart.delete()
 
     return HttpResponseRedirect(reverse('cart:index'))
+
+
+@login_required
+def cart_edit(request, pk, qty):
+
+    cart = request.user.cart.get(product=pk)
+    cart.qty = int(qty)
+    cart.save()
+
+    cart_items = Cart.get_cart(request.user)
+
+    context = {
+        'cart_items': cart_items,
+    }
+
+    result = render_to_string('cartapp/includes/inc_cart_items.html', context)
+
+    return JsonResponse({'result': result})

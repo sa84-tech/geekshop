@@ -34,31 +34,30 @@
 			</div>
 
 			<div class="container">
-				<div class="row mb-3">
+				<div class="row my-2">
 					<h2 class="col-6">Похожие продукты</h2>
-					<a class="col-6 text-end" href="{% url 'products:index' %}">
+					<a class="col-6 text-end explore" href="{% url 'products:index' %}">
 						показать все
 						<img src="{% static 'geekshop/img/arrow.png' %}" alt="">
 					</a>
 				</div>
 
-				<div class="re-prods row justify-content-start">
+				<div class="row justify-content-start mb-5 tab-content">
 
 					{% for product in products %}
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-							<div class="my-3 p-3 rounded card">
-								<a href="{% url 'products:product' product.id %}">
-									<img class="card-img-top" src="/media/{{ product.image }}" alt="">
-								</a>
-								<div class="card-body">
-									<a href="{% url 'products:product' product.id %}">
-										<div class="card-title">
-											<strong>{{ product.name|capfirst }}</strong>
-										</div>
-									</a>
-								</div>
+
+						<div class="block mb-2">
+						<a href="{% url 'products:product' product.id %}">
+							<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+							<div class="text">
+								<p>{{ product.category.name }}</p>
+								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+								<h4>{{ product.name|capfirst }}</h4>
+								<p>{{ product.shor_desc }}</p>
 							</div>
-						</div>
+						</a>
+					</div>
+
 					{% endfor %}
 
 				</div>
