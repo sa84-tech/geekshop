@@ -44,8 +44,8 @@ def index(request, pk=None):
 def cart_add(request, pk):
     _add_cart(request.user, pk)
 
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    # return HttpResponseRedirect(reverse('cart:index'))
+    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(reverse('cart:index'))
 
 
 @login_required
@@ -74,17 +74,24 @@ def cart_sub(request, pk):
 
 @login_required
 def cart_edit(request, pk, qty):
-
+    print(pk, qty)
     cart = request.user.cart.get(product=pk)
-    cart.qty = int(qty)
-    cart.save()
+    if qty > 0:
+        cart.qty = int(qty)
+        cart.save()
+    else:
+        cart.delete()
 
+    total_cost = get_total(request.user)
+    product_count = get_count(request.user)
     cart_items = Cart.get_cart(request.user)
 
     context = {
+        'total_cost': total_cost,
+        'count': product_count,
         'cart_items': cart_items,
     }
 
     result = render_to_string('cartapp/includes/inc_cart_items.html', context)
 
-    return JsonResponse({'result': result})
+    return JsonResponse({'result': result, 'context': context})
