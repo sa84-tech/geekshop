@@ -10,7 +10,10 @@
 					<h3 class="green">тенденции</h3>
 					<h3 class="big"> удобные стулья</h3>
 					<p>Новый уровень комфорта. Отличные характеристики.</p>
-					<a href="#" class="button-order">заказать <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
+					<a href="{% url 'products:index' %}" class="button-order">
+						заказать
+						<img src="{% static 'geekshop/img/arrow.png' %}" alt="">
+					</a>
 				</div>
 				<div class="navi">
 					<a href="#"></a><a href="#"></a><a href="#"></a>
@@ -20,34 +23,54 @@
 	</div>
 
 	<div class="container">
-		<div class="row my-2">
-			<div class="featured-menu col-2">
-				<a class="active" href="#">Популярные</a>
+		<div class="row my-2 featured_menu_links">
+			<div class="col-2 featured-menu">
+				<a class="popular_products-link active" href="#tab_content_1">Популярные</a>
 			</div>
-			<div class="featured-menu col-2">
-				<a href="#">Новинки</a>
+			<div class="col-2 featured-menu">
+				<a href="#tab_content_2" class="new_products-link">Новинки</a>
 			</div>
 		</div>
 
-		<div class="row justify-content-start mb-5 tab-content">
+		<div id="tab_content_1" class="row justify-content-start mb-5 tab-content popular_products">
 
-			{% for product in products %}
+			{% for product in popular_products %}
 
-				<div class="block mx-2">
-					<a class="img-fluid" href="{% url 'products:product' product.id %}">
-						<img src="/media/{{ product.image }}" alt="">
-						<div class="text">
-							<p>{{ product.category.name }}</p>
-							<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
-							<h4>{{ product.name|capfirst }}</h4>
-							<p>{{ product.shor_desc }}</p>
-						</div>
-					</a>
-				</div>
+			<div class="block mb-2">
+				<a href="{% url 'products:product' product.id %}">
+					<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+					<div class="text">
+						<p>{{ product.category.name }}</p>
+						<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+						<h4>{{ product.name|capfirst }}</h4>
+						<p>{{ product.short_desc }}</p>
+					</div>
+				</a>
+			</div>
 
 			{% endfor %}
 
 		</div>
+
+		<div id="tab_content_2" class="row justify-content-start mb-5 tab-content new_products d-none">
+
+			{% for product in new_products %}
+
+			<div class="block mb-2">
+				<a href="{% url 'products:product' product.id %}">
+					<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+					<div class="text">
+						<p>{{ product.category.name }}</p>
+						<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+						<h4>{{ product.name|capfirst }}</h4>
+						<p>{{ product.short_desc }}</p>
+					</div>
+				</a>
+			</div>
+
+			{% endfor %}
+		</div>
+
 	</div>
 
 	{% comment %}
@@ -62,13 +85,14 @@
 			<div class="tab-content">
 
 				{% for product in products %}
-					<div class="block">
-						<a href="#"><img class="img-fluid" src="/media/{{ product.image }}" alt="">
+				<div class="block mb-2">
+						<a href="{% url 'products:product' product.id %}">
+							<img class="img-fluid" src="/media/{{ product.image }}" alt="">
 							<div class="text">
 								<p>{{ product.category.name }}</p>
 								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
 								<h4>{{ product.name|capfirst }}</h4>
-								<p>{{ product.shor_desc }}</p>
+								<p>{{ product.short_desc }}</p>
 							</div>
 						</a>
 					</div>

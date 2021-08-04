@@ -20,13 +20,15 @@ def get_total(user):
 
 def index(request):
     title = 'магазин'
-    products = Product.objects.all()[3:]
+    popular_products = Product.objects.all().order_by('price')[:3]
+    new_products = Product.objects.all().order_by('-id')[:3]
     product_count = get_count(request.user)
     total_cost = get_total(request.user)
 
     context = {
         'title': title,
-        'products': products,
+        'popular_products': popular_products,
+        'new_products': new_products,
         'count': product_count,
         'total_cost': total_cost,
     }

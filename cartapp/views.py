@@ -41,38 +41,6 @@ def index(request, pk=None):
 
 
 @login_required
-def cart_add(request, pk):
-    _add_cart(request.user, pk)
-
-    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
-    return HttpResponseRedirect(reverse('cart:index'))
-
-
-@login_required
-def cart_remove(request, pk):
-
-    cart = request.user.cart.get(product=pk)
-
-    cart.delete()
-
-    return HttpResponseRedirect(reverse('cart:index'))
-
-
-@login_required
-def cart_sub(request, pk):
-
-    cart = request.user.cart.get(product=pk)
-
-    if cart.qty > 1:
-        cart.qty -= 1
-        cart.save()
-    else:
-        cart.delete()
-
-    return HttpResponseRedirect(reverse('cart:index'))
-
-
-@login_required
 def cart_edit(request, pk, qty):
     print(pk, qty)
     cart = request.user.cart.get(product=pk)

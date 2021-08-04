@@ -46,14 +46,14 @@
 
 					{% for product in products %}
 
-						<div class="block mb-2">
+					<div class="block mb-2">
 						<a href="{% url 'products:product' product.id %}">
 							<img class="img-fluid" src="/media/{{ product.image }}" alt="">
 							<div class="text">
 								<p>{{ product.category.name }}</p>
 								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
 								<h4>{{ product.name|capfirst }}</h4>
-								<p>{{ product.shor_desc }}</p>
+								<p>{{ product.short_desc }}</p>
 							</div>
 						</a>
 					</div>

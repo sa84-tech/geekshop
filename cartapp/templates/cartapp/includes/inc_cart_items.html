@@ -3,7 +3,7 @@
 
 	 <ul id="cart-list" class="list-group list-group-flush">
 		{% for cart_item in cart_items %}
-			<li class="list-group-item">
+			<li class="list-group-item" data-pk="{{ cart_item.product }}">
 				<div class="row">
 					<div class="col-md-2">
 						<img class="img-fluid" src="/media/{{ cart_item.product__image }}" alt="">
@@ -11,38 +11,34 @@
 					<div class="col-md-4">
 						{{ cart_item.product__name|capfirst }}
 					</div>
-				 <div class="col-md-2 qty-block">
-					 <div
-						 class="qty-block__change sub-btn mx-2"
-					 >
-						 &ndash;
-					 </div>
-					 <div class="qty-block__value">
-						 <input
-							 type="text"
-							 class="form-control border-0 p-0 text-center"
-							 value="{{ cart_item.qty }}"
-							 data-pk="{{ cart_item.product }}"
-						 >
-					 </div>
-					 <div
-						 class="qty-block__change mx-2 add-btn"
-					 >
-						 +
-					 </div>
-				 </div>
-				 <div class="col-md-2">{{ cart_item.cost }}<span>&#8381;</span></div>
-				 <div class="col-md-2">
-					 <div
-						 class="trash-block remove-btn"
-						 onclick="location.href='{% url 'cart:remove' cart_item.product %}'"
-					 >
-						 <i class="far fa-trash-alt"></i>
-					 </div>
-				 </div>
+					<div class="col-md-2 qty-block">
+						<div class="qty-block__change sub-btn mx-2"
+						>
+							&ndash;
+						</div>
+							<div class="qty-block__value">
+								<input
+								 type="text"
+								 class="form-control border-0 p-0 text-center"
+								 value="{{ cart_item.qty }}"
+								>
+							</div>
+							<div
+								class="qty-block__change mx-2 add-btn"
+							>
+								+
+							</div>
 					</div>
-
-			 </li>
+					<div class="col-md-2">{{ cart_item.cost }}<span>&#8381;</span></div>
+					<div class="col-md-2">
+					    <div
+					        class="trash-block remove-btn qty-block__remove"
+					    >
+						    <i class="far fa-trash-alt qty-block__remove"></i>
+					    </div>
+				    </div>
+				</div>
+			</li>
 		 {% endfor %}
 
 	 </ul>
