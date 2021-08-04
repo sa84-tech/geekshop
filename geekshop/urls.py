@@ -23,6 +23,7 @@ from geekshop.views import index, contacts
 urlpatterns = [
     path('', index, name='index'),
     path('admin/', admin.site.urls, name='panel'),
+    path('admin_staff/', include('adminapp.urls', namespace='admin_staff')),
     path('contact/', contacts, name='contacts'),
     path('products/', include('mainapp.urls', namespace='products')),
     path('auth/', include('authapp.urls', namespace='auth')),
