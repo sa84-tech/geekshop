@@ -1,25 +1,40 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from cartapp.models import Cart
 from geekshop.views import get_count, get_total
 from .models import Product, ProductCategory
 
 
-def product_list(request, pk=None):
+def product_list(request, pk=0, page=1):
     title = 'каталог'
-    menu_items = ProductCategory.objects.all()
+    menu_items = ProductCategory.objects.filter(is_active=True)
     product_count = get_count(request.user)
     total_cost = get_total(request.user)
 
-    if pk:
-        products = Product.objects.filter(category_id=pk)[:9]
+    if pk == 0:
+        category = {
+            'pk': 0,
+            'name': 'Все',
+        }
+        products = Product.objects.filter(is_active=True, category__is_active=True)
     else:
-        products = Product.objects.all()[:9]
+        category = get_object_or_404(ProductCategory, pk=pk)
+        products = Product.objects.filter(category_id=pk, is_active=True, category__is_active=True)
+
+    paginator = Paginator(products, 3)
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
 
     context = {
         'title': title,
         'menu_items': menu_items,
-        'products': products,
+        'products': products_paginator,
+        'category': category,
         'count': product_count,
         'total_cost': total_cost,
     }
