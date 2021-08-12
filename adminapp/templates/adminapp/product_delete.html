@@ -4,19 +4,19 @@
 {% block content %}
 <div class="product_delete">
     {% csrf_token %}
-    Уверены, что хотите удалить {{ product.name }}?
+    Уверены, что хотите {% if object.is_active %} удалить {% else %} восстановить {% endif %} {{ object.name }}?
 
     <div class="row mt-4">
 
-        <form action="{% url 'admin_staff:product_delete' product.pk %}" method="post">
+        <form action="{% url 'admin_staff:product_delete' object.pk %}" method="post">
             {% csrf_token %}
             <button
                 class="btn btn-danger"
                 type="submit"
             >
-                Удалить
+                {% if object.is_active %} удалить {% else %} восстановить {% endif %}
             </button>
-            <a href="{% url 'admin_staff:products' product.category.pk %}">
+            <a href="{% url 'admin_staff:products' object.category.pk %}">
                 <button class="btn btn-outline-danger">
                     Отмена
                 </button>

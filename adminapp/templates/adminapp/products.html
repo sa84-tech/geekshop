@@ -38,7 +38,7 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        {% for object in objects %}
+                        {% for object in object_list %}
                         <tr
                                 {% if not object.is_active %}
                                 class="text-secondary"
@@ -68,19 +68,16 @@
                                 </button>
                             </td>
                             <td class="text-center">
-                                {% if object.is_active %}
+
                                 <a href="{% url 'admin_staff:product_delete' object.pk %}">
                                     <button type="button" class="btn btn-outline-secondary">
+                                        {% if object.is_active %}
                                         удалить
-                                    </button>
-                                </a>
-                                {% else %}
-                                <a href="{% url 'admin_staff:product_restore' object.pk %}">
-                                    <button type="button" class="btn btn-outline-secondary">
+                                        {% else %}
                                         восстановить
+                                        {% endif %}
                                     </button>
                                 </a>
-                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}

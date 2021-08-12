@@ -15,7 +15,7 @@
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <ul class="list-group">
-                        {{ update_form.as_ul }}
+                        {{ form.as_ul }}
                     </ul>
                     <input class="btn btn-primary" type="submit" value="Сохранить">
 

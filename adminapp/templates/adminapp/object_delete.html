@@ -1,0 +1,39 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="user_delete">
+    {% csrf_token %}
+    Уверены, что хотите {% if object.is_active %} удалить {% else %} восстановить {% endif %}
+    {% if object.username %}
+        {{ object.username }}
+    {% endif %}
+    {% if object.name %}
+        {{ object.name }}
+    {% endif %}
+    {% if object.first_name %}
+        ({{ object.first_name|title }}
+            {% if object.last_name %}
+                {{ object.last_name|title }}
+        {% endif %})
+    {% endif %}
+    ?
+
+    <div class="row mt-4">
+        <form action="{% url url_values.post object.pk %}" method="post">
+            {% csrf_token %}
+            <button
+                class="btn btn-danger me-2"
+                type="submit"
+            >
+                {% if object.is_active %} Удалить {% else %} Восстановить {% endif %}
+            </button>
+            <a href="{% url url_values.get %}">
+                <button class="btn btn-outline-danger">
+                    Отмена
+                </button>
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
