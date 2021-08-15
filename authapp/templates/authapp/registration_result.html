@@ -1,0 +1,25 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if success %}
+    <h3>Поздравляем, регистрация прошла успешно!</h3>
+    <br>
+    <h4>
+        На почтовый яищк {{ user.email }} было отправлено письмо с ссылкой для активации аккаунта.
+    </h4>
+{% else %}
+    <h4>
+        При регистрации аккаунта {{ user.username }} произошел сбой.
+        Обрартитесь в службу технической поддержки support@geekshop.com
+    </h4>
+{% endif %}
+<br>
+<a href="{% url 'index' %}" class="">
+    <button class="btn btn-round form-control">
+        на главную
+    </button>
+</a>
+
+{% endblock %}

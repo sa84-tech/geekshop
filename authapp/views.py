@@ -62,13 +62,14 @@ def send_verify_mail(user):
 
 
 def verify(request, email, activation_key):
+
     try:
         user = ShopUser.objects.get(email=email)
         if user.activation_key == activation_key and not user.is_activation_key_expired:
             user.is_active = True
             user.save()
             auth.login(request, user)
-            return render(request, 'authap/verification.html')
+            return render(request, 'authapp/verification.html')
         else:
             print(f'Activation key error. User: ({user.username})')
             return render(request, 'authapp/verification.html')
@@ -87,10 +88,18 @@ def register(request):
             user = register_form.save()
             if send_verify_mail(user):
                 print('сообщение отправлено')
-                return HttpResponseRedirect(reverse('auth:login'))
+                return render(
+                    request,
+                    'authapp/registration_result.html',
+                    {'title': title, 'user': user, 'success': True}
+                )
             else:
                 print('сообщение не отправлено')
-                return HttpResponseRedirect(reverse('auth:login'))
+                return render(
+                    request,
+                    'authapp/registration_result.html',
+                    {'title': title, 'user': user, 'success': False}
+                )
     else:
         register_form = ShopUserRegisterForm()
 
