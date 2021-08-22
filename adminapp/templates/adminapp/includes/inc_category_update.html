@@ -1,0 +1,33 @@
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Категория</h1>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                {% if request.resolver_match.url_name == 'api_category_create' %}
+                    Создание
+                {% else %}
+                    Редактирование
+                {% endif %}
+            </div>
+            <div class="card-body">
+
+                <form
+                    class="form-horizontal"
+                    method="post"
+                    {% if request.resolver_match.url_name == 'api_category_create' %}
+                        data-is_create="true"
+                    {% endif %}
+                    enctype="multipart/form-data"
+                    data-key="{{ edit_category_id }}"
+                >
+                    {% csrf_token %}
+                    <ul class="list-group">
+                        {{ form.as_ul }}
+                    </ul>
+                    <input class="btn btn-primary" type="submit" value="Сохранить">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

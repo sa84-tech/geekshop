@@ -162,12 +162,12 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
 #         'category_form': category_form,
 #     }
 #
-#     return render(request, 'adminapp/category_update.html', context)
+#     return render(request, 'adminapp/inc_category_update.html', context)
 
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = ProductCategory
-    template_name = 'adminapp/category_update.html'
+    template_name = 'adminapp/inc_category_update.html'
     form_class = ProductCategoryEditForm
     success_url = reverse_lazy('admin_staff:categories')
 
@@ -226,12 +226,12 @@ class CategoryListView(LoginRequiredMixin, ListView):
 #         'category_form': category_form,
 #     }
 #
-#     return render(request, 'adminapp/category_update.html', context)
+#     return render(request, 'adminapp/inc_category_update.html', context)
 
 
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = ProductCategory
-    template_name = 'adminapp/category_update.html'
+    template_name = 'adminapp/inc_category_update.html'
     form_class = ProductCategoryEditForm
     success_url = reverse_lazy('admin_staff:categories')
 
@@ -299,12 +299,12 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
 #         'category': category,
 #     }
 #
-#     return render(request, 'adminapp/product_update.html', context)
+#     return render(request, 'adminapp/inc_product_update.html', context)
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    template_name = 'adminapp/product_update.html'
+    template_name = 'adminapp/inc_product_update.html'
     form_class = ProductEditForm
 
     def post(self, request, *args, **kwargs):
@@ -395,12 +395,12 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 #         'category': cur_product.category,
 #     }
 #
-#     return render(request, 'adminapp/product_update.html', context)
+#     return render(request, 'adminapp/inc_product_update.html', context)
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    template_name = 'adminapp/product_update.html'
+    template_name = 'adminapp/inc_product_update.html'
     form_class = ProductEditForm
 
     def post(self, request, *args, **kwargs):

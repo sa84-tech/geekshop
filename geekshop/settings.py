@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'authapp',
     'cartapp',
     'adminapp',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -160,3 +162,8 @@ EMAIL_USE_TLS = False
 # вариант логирования сообщений почты в виде файлов вместо отправки
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = 'tmp/email-messages/'
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:5500",
+    "http://localhost:8000",
+]
