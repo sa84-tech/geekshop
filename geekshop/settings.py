@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'authapp',
     'cartapp',
     'adminapp',
+    'ordersapp'
     'corsheaders',
 
     'social_django'
@@ -91,6 +92,8 @@ SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 SOCIAL_AUTH_VK_EXTRA_DATA = [
     ('email', 'email'),
 ]
+
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
