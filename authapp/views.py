@@ -123,7 +123,6 @@ def edit(request):
         edit_form = ShopUserEditForm(instance=request.user)
         profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-
     context = {
         'title': title,
         'edit_form': edit_form,
