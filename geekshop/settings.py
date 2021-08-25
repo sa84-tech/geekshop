@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'authapp',
     'cartapp',
     'adminapp',
-    'ordersapp'
+    'ordersapp',
     'corsheaders',
 
     'social_django'

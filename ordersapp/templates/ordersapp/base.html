@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}
+        {{ title|title }}
+        {% endblock %}
+    </title>
+    {% block css %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'geekshop/fonts/font-awesome/css/all.min.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{% static 'geekshop/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'geekshop/forms.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'adminapp/css/admin.css' %}">
+    {% endblock %}
+
+    {% block js %}
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js'></script>
+    <script src='{% static 'ordersapp/js/orders_script.js' %}'></script>
+    {% endblock %}
+</head>
+<body>
+<div class="order_container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
