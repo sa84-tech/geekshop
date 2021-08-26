@@ -1,0 +1,23 @@
+{% extends 'ordersapp/base.html' %}
+{% load static %}
+{% block content %}
+<div class="category_delete">
+    <div class="h1">Уверены, что хотите удалить?</div>
+    {% include 'ordersapp/includes/inc_order_summary.html' %}
+    <div class="row mt-5">
+        <form
+                action="{% url 'ordersapp:order_delete' object.pk %}"
+                method="post"
+        >
+            {% csrf_token %}
+            <input class="btn btn-outline-danger me-3" type="submit" value="удалить">
+            <a
+                href="{% url 'ordersapp:order_list' %}"
+                class="btn btn-outline-secondary"
+            >
+                отмена
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

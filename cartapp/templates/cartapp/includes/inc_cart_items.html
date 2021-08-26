@@ -55,7 +55,13 @@
 				 </h4>
 			 </li>
 			 <li class="list-group-item">
-				 <button type="button" class="btn btn-secondary">Продолжить</button>
+				 <button
+					 type="button"
+					 class="btn btn-secondary"
+					 onclick="location.href='{% url 'ordersapp:order_create' %}'"
+				 >
+					 Оформить заказ
+				 </button>
 			 </li>
 		 </ul>
 	 </div>

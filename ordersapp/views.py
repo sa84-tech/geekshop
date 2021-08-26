@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
@@ -17,35 +18,37 @@ class OrderList(ListView):
         return Order.objects.filter(user=self.request.user)
 
 
-class OrderItemsCreate(CreateView):
+class OrderItemsCreate(LoginRequiredMixin, CreateView):
     model = Order
     fields = []
     success_url = reverse_lazy('ordersapp:order_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
-        order_formset = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
 
         if self.request.POST:
-            formset = order_formset(self.request.POST)
+            formset = OrderFormSet(self.request.POST)
         else:
             cart_items = Cart.objects.filter(user=self.request.user)
             if len(cart_items):
-                order_formset = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(cart_items))
-                formset = order_formset()
+                OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(cart_items))
+                formset = OrderFormSet()
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = cart_items[num].product
                     form.initial['quantity'] = cart_items[num].qty
+                data['total_cost'] = Cart.total(self.request.user)
+                data['total_quantity'] = Cart.count(self.request.user)
                 cart_items.delete()
             else:
-                formset = order_formset()
+                formset = OrderFormSet()
 
         data['orderitems'] = formset
 
         return data
 
     def form_valid(self, form):
-        context = self.object = form.save()
+        context = self.get_context_data()
         orderitems = context['orderitems']
 
         with transaction.atomic():
@@ -71,35 +74,26 @@ class OrderRead(DetailView):
         return context
 
 
-class OrderItemsUpdate(UpdateView):
+class OrderItemsUpdate(LoginRequiredMixin, UpdateView):
     model = Order
     fields = []
     success_url = reverse_lazy('ordersapp:order_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsUpdate, self).get_context_data(**kwargs)
-        order_formset = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
 
         if self.request.POST:
-            formset = order_formset(self.request.POST, instance=self.object)
+            formset = OrderFormSet(self.request.POST, instance=self.object)
         else:
-            cart_items = Cart.objects.filter(user=self.request.user)
-            if len(cart_items):
-                order_formset = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(cart_items))
-                formset = order_formset()
-                for num, form in enumerate(formset.forms):
-                    form.initial['product'] = cart_items[num].product
-                    form.initial['quantity'] = cart_items[num].qty
-                cart_items.delete()
-            else:
-                formset = order_formset()
+            formset = OrderFormSet(instance=self.object)
 
         data['orderitems'] = formset
 
         return data
 
     def form_valid(self, form):
-        context = self.object = form.save()
+        context = self.get_context_data()
         orderitems = context['orderitems']
 
         with transaction.atomic():
@@ -115,7 +109,7 @@ class OrderItemsUpdate(UpdateView):
         return super(OrderItemsUpdate, self).form_valid(form)
 
 
-class OrderDelete(DeleteView):
+class OrderDelete(LoginRequiredMixin, DeleteView):
     model = Order
     success_url = reverse_lazy('ordersapp:order_list')
 

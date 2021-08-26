@@ -68,7 +68,7 @@ class Order(models.Model):
 
     @property
     def get_total_cost(self):
-        items = self.oredereditems.select_relatied()
+        items = self.orderitems.select_related()
 
         return sum(list(map(lambda x: x.quantity * x.product.price, items)))
 
