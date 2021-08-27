@@ -11,7 +11,7 @@ from ordersapp.forms import OrderItemForm
 from ordersapp.models import Order, OrderItem
 
 
-class OrderList(ListView):
+class OrdersList(LoginRequiredMixin, ListView):
     model = Order
 
     def get_queryset(self):
@@ -21,7 +21,7 @@ class OrderList(ListView):
 class OrderItemsCreate(LoginRequiredMixin, CreateView):
     model = Order
     fields = []
-    success_url = reverse_lazy('ordersapp:order_list')
+    success_url = reverse_lazy('ordersapp:orders_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
@@ -77,7 +77,7 @@ class OrderRead(DetailView):
 class OrderItemsUpdate(LoginRequiredMixin, UpdateView):
     model = Order
     fields = []
-    success_url = reverse_lazy('ordersapp:order_list')
+    success_url = reverse_lazy('ordersapp:orders_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsUpdate, self).get_context_data(**kwargs)
@@ -111,7 +111,16 @@ class OrderItemsUpdate(LoginRequiredMixin, UpdateView):
 
 class OrderDelete(LoginRequiredMixin, DeleteView):
     model = Order
-    success_url = reverse_lazy('ordersapp:order_list')
+    success_url = reverse_lazy('ordersapp:orders_list')
+
+
+class OrderRead(LoginRequiredMixin, DetailView):
+    model = Order
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderRead, self).get_context_data(**kwargs)
+        context['title'] = 'заказ/просмотр'
+        return context
 
 
 def order_forming_complete(request, pk):

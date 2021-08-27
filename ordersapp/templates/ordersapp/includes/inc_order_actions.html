@@ -1,0 +1,34 @@
+<style>
+    .btn-group .btn {
+        min-width: 200px;
+    }
+</style>
+<div class="btn-group mt-5" role="group" aria-label="">
+    {% if object.status == 'FM' %}
+        <a
+            href="{% url 'ordersapp:order_forming_complete' object.pk %}"
+            class="btn btn-outline-info form-control last text-truncate"
+        >
+            совершить покупку
+        </a>
+        <a
+            href="{% url 'ordersapp:order_delete' object.pk %}"
+            class="btn btn-outline-info form-control last text-truncate"
+            tooltip=""
+        >
+            удалить
+        </a>
+    {% endif %}
+        <a
+            class="btn btn-outline-info form-control last text-truncate"
+            href="{% url 'ordersapp:orders_list' %}"
+        >
+            к списку заказов
+        </a>
+        <a
+            class="btn btn-outline-info form-control last text-truncate"
+            href="{% url 'index' %}"
+        >
+            на главную
+        </a>
+</div>
