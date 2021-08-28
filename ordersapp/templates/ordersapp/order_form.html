@@ -35,9 +35,21 @@
             </tr>
             {% endfor %}
         </table>
-        <button type="submit" value="сохранить" class="btn btn-default
-btn-round form-control last">сохранить
-        </button>
+        <div>
+            <button
+                type="submit"
+                value="сохранить"
+                class="btn btn-outline-primary"
+            >
+                {% if request.resolver_match.url_name == 'order_create' %}
+                    Оформить заказ
+                {% else %}
+                    Сохранить
+                {% endif %}
+            </button>
+        </div>
+
+
         {% include 'ordersapp/includes/inc_order_actions.html' %}
     </form>
 </div>

@@ -21,7 +21,7 @@ class OrdersList(LoginRequiredMixin, ListView):
 class OrderItemsCreate(LoginRequiredMixin, CreateView):
     model = Order
     fields = []
-    success_url = reverse_lazy('ordersapp:orders_list')
+    success_url = reverse_lazy('order:orders_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
@@ -74,10 +74,10 @@ class OrderRead(DetailView):
         return context
 
 
-class OrderItemsUpdate(LoginRequiredMixin, UpdateView):
+class OrderItemsUpdate(UpdateView):
     model = Order
     fields = []
-    success_url = reverse_lazy('ordersapp:orders_list')
+    success_url = reverse_lazy('order:orders_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsUpdate, self).get_context_data(**kwargs)
@@ -111,7 +111,7 @@ class OrderItemsUpdate(LoginRequiredMixin, UpdateView):
 
 class OrderDelete(LoginRequiredMixin, DeleteView):
     model = Order
-    success_url = reverse_lazy('ordersapp:orders_list')
+    success_url = reverse_lazy('order:orders_list')
 
 
 class OrderRead(LoginRequiredMixin, DetailView):
@@ -128,4 +128,4 @@ def order_forming_complete(request, pk):
     order.status = Order.SENT_TO_PROCEED
     order.save()
 
-    return HttpResponseRedirect(reverse('ordersapp:orders_list'))
+    return HttpResponseRedirect(reverse('order:orders_list'))
