@@ -36,9 +36,10 @@ class OrderItemsCreate(LoginRequiredMixin, CreateView):
                 formset = OrderFormSet()
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = cart_items[num].product
-                    form.initial['quantity'] = cart_items[num].qty
+                    form.initial['qtty'] = cart_items[num].qtty
+                    # cart_items[num].delete()
                 data['total_cost'] = Cart.total(self.request.user)
-                data['total_quantity'] = Cart.count(self.request.user)
+                data['total_qtty'] = Cart.count(self.request.user)
                 cart_items.delete()
             else:
                 formset = OrderFormSet()

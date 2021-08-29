@@ -53,7 +53,7 @@ class Product(models.Model):
         decimal_places=2,
         default=0,
     )
-    quantity = models.PositiveIntegerField(
+    qtty = models.PositiveIntegerField(
         verbose_name='количество на складе',
         default=0,
     )
@@ -64,6 +64,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        print(f'Product Save: ID: {self.pk} QTTY: {self.qtty}')
+        super(self.__class__, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Товар'

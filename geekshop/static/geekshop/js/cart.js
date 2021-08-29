@@ -20,15 +20,15 @@ const cart = {
     async onClick(event) {
         const target = event.target;
 
-        if (target.classList.contains('qty-block__change')) {
-            const qtyBlock = target.parentNode.children[1].children[0];
-            const newValue = target.classList.contains('add-btn') ? +qtyBlock.value + 1 : +qtyBlock.value - 1;
+        if (target.classList.contains('qtty-block__change')) {
+            const qttyBlock = target.parentNode.children[1].children[0];
+            const newValue = target.classList.contains('add-btn') ? +qttyBlock.value + 1 : +qttyBlock.value - 1;
             const productId = target.closest('.list-group-item').dataset.pk;
 
             const data = await this.fetchData(`${this.url}/${productId}/${newValue}`);
             this.render(data);
         }
-        else if (target.classList.contains('qty-block__remove')) {
+        else if (target.classList.contains('qtty-block__remove')) {
             const productId = target.closest('.list-group-item').dataset.pk;
 
             const data = await this.fetchData(`${this.url}/${productId}/0`);
