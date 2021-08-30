@@ -3,12 +3,13 @@ from django.db import transaction
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 
 from cartapp.models import Cart
+from mainapp.models import Product
 from ordersapp.forms import OrderItemForm
 from ordersapp.models import Order, OrderItem
 
@@ -57,6 +58,7 @@ class OrderItemsCreate(LoginRequiredMixin, CreateView):
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = cart_items[num].product
                     form.initial['qtty'] = cart_items[num].qtty
+                    form.initial['price'] = cart_items[num].product.price
                     # cart_items[num].delete()
                 data['total_cost'] = Cart.total(self.request.user)
                 data['total_qtty'] = Cart.count(self.request.user)
@@ -108,6 +110,9 @@ class OrderItemsUpdate(UpdateView):
             formset = OrderFormSet(self.request.POST, instance=self.object)
         else:
             formset = OrderFormSet(instance=self.object)
+            for form in formset.forms:
+                if form.instance.pk:
+                    form.initial['price'] = form.instance.product.price
 
         data['orderitems'] = formset
 
@@ -150,3 +155,10 @@ def order_forming_complete(request, pk):
     order.save()
 
     return HttpResponseRedirect(reverse('order:orders_list'))
+
+
+def get_price(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    print(product.price)
+    if product:
+        return JsonResponse({'result': product.price})
