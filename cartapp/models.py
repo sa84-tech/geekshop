@@ -7,16 +7,16 @@ from mainapp.models import Product
 from ordersapp.models import OrderItem
 
 
-class CartQuerySet(models.QuerySet):
-    def delete(self, *args, **kwargs):
-        for object in self:
-            object.product.qtty += object.qtty
-            object.product.save()
-        super(CartQuerySet, self).delete(*args, **kwargs)
+# class CartQuerySet(models.QuerySet):
+#     def delete(self, *args, **kwargs):
+#         for object in self:
+#             object.product.qtty += object.qtty
+#             object.product.save()
+#         super(CartQuerySet, self).delete(*args, **kwargs)
 
 
 class Cart(models.Model):
-    objects = CartQuerySet.as_manager()
+    # objects = CartQuerySet.as_manager()
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -61,15 +61,15 @@ class Cart(models.Model):
         cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qtty']}, cart)
         return list(cart_items)
 
-    def save(self, *args, **kwargs):
-        if self.pk:
-            self.product.qtty -= self.qtty - self.__class__.get_item(self.pk).qtty
-        else:
-            self.product.qtty -= self.qtty
-        self.product.save()
-        super(self.__class__, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        self.product.qtty += self.qtty
-        self.product.save()
-        super(self.__class__, self).delete(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.pk:
+    #         self.product.qtty -= self.qtty - self.__class__.get_item(self.pk).qtty
+    #     else:
+    #         self.product.qtty -= self.qtty
+    #     self.product.save()
+    #     super(self.__class__, self).save(*args, **kwargs)
+    #
+    # def delete(self, *args, **kwargs):
+    #     self.product.qtty += self.qtty
+    #     self.product.save()
+    #     super(self.__class__, self).delete(*args, **kwargs)

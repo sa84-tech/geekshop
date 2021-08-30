@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models.signals import pre_save, pre_delete
+from django.dispatch import receiver
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -16,6 +18,24 @@ class OrdersList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+
+@receiver(pre_save, sender=OrderItem)
+@receiver(pre_save, sender=Cart)
+def product_qtty_update_save(sender, update_fields, instance, **kwargs):
+    if update_fields is 'qtty' or 'product':
+        if instance.pk:
+            instance.product.qtty -= instance.qtty - sender.get_item(instance.pk).qtty
+        else:
+            instance.product.qtty -= instance.qtty
+        instance.product.save()
+
+
+@receiver(pre_delete, sender=OrderItem)
+@receiver(pre_delete, sender=Cart)
+def product_qtty_update_delete(sender, instance, **kwargs):
+    instance.product.qtty += instance.qtty
+    instance.product.save()
 
 
 class OrderItemsCreate(LoginRequiredMixin, CreateView):

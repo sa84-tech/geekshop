@@ -4,12 +4,12 @@ from django.conf import settings
 from mainapp.models import Product
 
 
-class OrderItemQuerySet(models.QuerySet):
-    def delete(self, *args, **kwargs):
-        for object in self:
-            object.product.qtty += object.qtty
-            object.product.save()
-        super(OrderItemQuerySet, self).delete(*args, **kwargs)
+# class OrderItemQuerySet(models.QuerySet):
+#     def delete(self, *args, **kwargs):
+#         for object in self:
+#             object.product.qtty += object.qtty
+#             object.product.save()
+#         super(OrderItemQuerySet, self).delete(*args, **kwargs)
 
 
 class Order(models.Model):
@@ -88,7 +88,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    objects = OrderItemQuerySet.as_manager()
+    # objects = OrderItemQuerySet.as_manager()
 
     order = models.ForeignKey(
         Order,
@@ -107,11 +107,15 @@ class OrderItem(models.Model):
         default=1,
     )
 
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.filter(pk=pk).first()
+
     def get_product_cost(self):
         return self.product.price * self.qtty
 
-    def delete(self):
-        self.product.qtty += self.qtty
-        self.product.save()
-
-        super(self.__class__, self).delete()
+    # def delete(self):
+    #     self.product.qtty += self.qtty
+    #     self.product.save()
+    #
+    #     super(self.__class__, self).delete()
