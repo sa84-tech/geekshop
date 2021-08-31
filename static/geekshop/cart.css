@@ -1,0 +1,27 @@
+.qtty-block {
+    display: flex;
+    justify-content: left;
+    align-items: start;
+}
+
+.qtty-block__value {
+    padding: 0 4px;
+    border-bottom: 1px solid gray;
+}
+
+.qtty-block__change {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.trash-block {
+    color: gray;
+    cursor: pointer;
+}
+
+.trash-block:hover,
+ .trash-block:active{
+    color: black;
+}
