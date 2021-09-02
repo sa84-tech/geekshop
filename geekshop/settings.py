@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 import environ
+
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -27,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$sg@8aegwaa=vk-iza3cfi-3d!==+gsr-=h($+r%k9t)-c#wkz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False 
+DEBUG = True 
 
 ALLOWED_HOSTS = ['*']
 
