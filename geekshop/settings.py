@@ -26,10 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$sg@8aegwaa=vk-iza3cfi-3d!==+gsr-=h($+r%k9t)-c#wkz'
+#SECRET_KEY = 'django-insecure-$sg@8aegwaa=vk-iza3cfi-3d!==+gsr-=h($+r%k9t)-c#wkz'
+SECRET_KEY = env('SECRET_KEY')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'template_profiler_panel',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -200,6 +203,9 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, "geekshop", "static"),
+#)
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -217,6 +223,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/auth/login/'
 
 DOMAIN_NAME = 'http://185.46.11.18'
+#DOMAIN_NAME = 'http://127.0.0.1'
 
 EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
@@ -233,6 +240,7 @@ EMAIL_USE_TLS = False
 
 CORS_ORIGIN_WHITELIST = [
     "http://185.46.11.18:80",
+    "http://127.0.0.1:8000",
 ]
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = env('SOCIAL_AUTH_VK_OAUTH2_KEY')
