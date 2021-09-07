@@ -60,16 +60,3 @@ class Cart(models.Model):
         cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qtty')
         cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qtty']}, cart)
         return list(cart_items)
-
-    # def save(self, *args, **kwargs):
-    #     if self.pk:
-    #         self.product.qtty -= self.qtty - self.__class__.get_item(self.pk).qtty
-    #     else:
-    #         self.product.qtty -= self.qtty
-    #     self.product.save()
-    #     super(self.__class__, self).save(*args, **kwargs)
-    #
-    # def delete(self, *args, **kwargs):
-    #     self.product.qtty += self.qtty
-    #     self.product.save()
-    #     super(self.__class__, self).delete(*args, **kwargs)
