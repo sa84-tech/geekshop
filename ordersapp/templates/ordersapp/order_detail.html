@@ -2,9 +2,11 @@
 {% load static %}
 {% load my_tags %}
 {% block content %}
+{% with object_summary=object.get_summary %}
 {% include 'ordersapp/includes/inc_order_summary.html' %}
 <ul class="basket_list list-group list-group-flush">
-    {% for item in object.orderitems.select_related %}
+
+    {% for item in object_summary.items %}
         <li class="list-group-item basket_record">
             <div class="row" >
                 <div class="col-2">
@@ -35,5 +37,6 @@
         </li>
     {% endfor %}
 </ul>
+{% endwith %}
 {% include 'ordersapp/includes/inc_order_actions.html' %}
 {% endblock %}

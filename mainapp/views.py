@@ -37,19 +37,19 @@ def product_list(request, pk=0, page=1):
 
 
 def product_details(request, pk=None):
-    print(pk)
     title = 'каталог'
-    menu_items = ProductCategory.objects.all()
 
     if pk:
         product = get_object_or_404(Product, pk=pk)
-        products = Product.objects.filter(category_id=product.category).exclude(pk=pk)[:3]
+        products = list(Product.objects.filter(category_id=product.category)
+                        .exclude(pk=pk)
+                        .values_list('pk', 'image', 'category__name', 'name', 'short_desc', ))[:3]
+        print(products)
     else:
         products = Product.objects.all()[:3]
 
     context = {
         'title': title,
-        'menu_items': menu_items,
         'products': products,
         'product': product,
     }

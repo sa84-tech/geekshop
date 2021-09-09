@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 {% include 'ordersapp/includes/inc_order_summary.html' %}
+{% include 'ordersapp/includes/inc_order_summary.html' %}
 <div class="order_form">
     <form action="" method="post">
         {% csrf_token %}
@@ -52,7 +53,7 @@
                 Сохранить
             </button>
         </div>
-
+{% endwith }
 
         {% include 'ordersapp/includes/inc_order_actions.html' %}
     </form>

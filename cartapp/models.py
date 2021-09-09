@@ -60,3 +60,8 @@ class Cart(models.Model):
         cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qtty')
         cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qtty']}, cart)
         return list(cart_items)
+
+    @staticmethod
+    def delete_items(user):
+        Cart.objects.filter(user=user).delete()
+

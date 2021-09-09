@@ -36,6 +36,21 @@ def index(request, pk=None):
     return render(request, 'cartapp/cart.html', context)
 
 
+def cart_add(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('auth:login'))
+
+    product = get_object_or_404(Product, pk=pk)
+
+    cart, create = Cart.objects.get_or_create(user=request.user, product=product)
+    if not create:
+        cart.qtty += 1
+
+    cart.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
 @login_required
 def cart_edit(request, pk, qtty):
     print(f'controller: cart_edit, params - pk: {pk}, qtty: {qtty}')

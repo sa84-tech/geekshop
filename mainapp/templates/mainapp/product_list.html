@@ -34,14 +34,14 @@
                                 </div>
                             </a>
                             <h3 class="card-text">{{ product.price }} <span>&#8381;</span></h3>
-                            {% comment %}
+
                             <btn
                                     onclick="location.href='{% url 'cart:add' product.pk %}'"
-                                    class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
+                                    class="btn position-absolute bottom-0 end-0 m-2"
                             >
                                 <i class="fa fa-cart-plus"></i>
                             </btn>
-                            {% endcomment %}
+
                         </div>
                     </div>
                 </div>

@@ -79,17 +79,17 @@ class Product(models.Model):
         return list(map(lambda s: s.strip(), descriptions))
 
     @staticmethod
-    def get_items_cached():
+    def get_items():
         return Product.objects.all()
 
     @staticmethod
     def get_popular_products():
-        _items = Product.get_items_cached()
+        _items = Product.get_items()
         return list(_items.order_by('price').values())[:3]
 
     @staticmethod
     def get_new_products():
-        _items = Product.get_items_cached()
+        _items = Product.get_items()
         return list(_items.order_by('-id').values())[:3]
 
 

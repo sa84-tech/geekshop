@@ -88,7 +88,7 @@ class Order(models.Model):
             'total_qtty': sum(list(map(lambda x: x.qtty, _items))),
             'updated': self.updated,
             'created': self.created,
-
+            'items': _items,
         }
 
     def get_product_type_qtty(self):

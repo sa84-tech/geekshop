@@ -1,5 +1,5 @@
 {% if object %}
-    {% with object_summary=object.get_summary %}
+
     <div class="h2">Заказ №{{ object.pk }} от {{ object_summary.created|date:"Y-m-d H:i:s" }}
     </div>
     <hr>
@@ -14,17 +14,15 @@
     <div class="h3">
         общая стоимость: <span class="order_total_cost">{{ object_summary.total_cost}}</span> руб.
     </div>
-    {% endwith %}
+
 {% else %}
     <div class="h2">Новый заказ</div>
     <hr>
     <div class="h4">заказчик: {{ user.last_name }} {{ user.first_name }}</div>
-    {% if total_cost %}
-        <div class="h4">
-            общее количество товаров: <span class="order_total_qtty">{{ total_qtty }}</span>
-        </div>
-        <div class="h3">
-            общая стоимость: <span class="order_total_cost">{{ total_cost }}</span> руб
-        </div>
-    {% endif %}
+    <div class="h4">
+        общее количество товаров: <span class="order_total_qtty">{{ object_summary.total_qtty }}</span>
+    </div>
+    <div class="h3">
+        общая стоимость: <span class="order_total_cost">{{ object_summary.total_cost }}</span> руб
+    </div>
 {% endif %}

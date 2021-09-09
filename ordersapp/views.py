@@ -51,18 +51,22 @@ class OrderItemsCreate(LoginRequiredMixin, CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            cart_items = Cart.objects.filter(user=self.request.user)
+            # cart_items = Cart.objects.filter(user=self.request.user)
+            cart_items = Cart.get_cart(self.request.user)
+            print(cart_items)
             if len(cart_items):
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(cart_items))
                 formset = OrderFormSet()
                 for num, form in enumerate(formset.forms):
-                    form.initial['product'] = cart_items[num].product
-                    form.initial['qtty'] = cart_items[num].qtty
-                    form.initial['price'] = cart_items[num].product.price
+                    form.initial['product'] = cart_items[num]['product']
+                    form.initial['qtty'] = cart_items[num]['qtty']
+                    form.initial['price'] = cart_items[num]['product__price']
                     # cart_items[num].delete()
                 data['total_cost'] = Cart.total(self.request.user)
                 data['total_qtty'] = Cart.count(self.request.user)
-                cart_items.delete()
+                # cart_items.delete() !!!
+                print(self.request.user.cart)
+                Cart.delete_items(self.request.user)
             else:
                 formset = OrderFormSet()
 
