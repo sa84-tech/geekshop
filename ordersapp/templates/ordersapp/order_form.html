@@ -1,7 +1,7 @@
 {% extends "ordersapp/base.html" %}
 {% load static %}
 {% block content %}
-{% include 'ordersapp/includes/inc_order_summary.html' %}
+{% with object_summary=object.get_summary %}
 {% include 'ordersapp/includes/inc_order_summary.html' %}
 <div class="order_form">
     <form action="" method="post">
@@ -53,7 +53,7 @@
                 Сохранить
             </button>
         </div>
-{% endwith }
+{% endwith %}
 
         {% include 'ordersapp/includes/inc_order_actions.html' %}
     </form>

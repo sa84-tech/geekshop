@@ -57,11 +57,19 @@ class Cart(models.Model):
 
     @staticmethod
     def get_cart(user):
-        cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qtty')
+        cart = user.cart.values('pk', 'product__pk', 'product__name', 'product__image', 'product__price', 'qtty')
         cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qtty']}, cart)
         return list(cart_items)
 
     @staticmethod
+    def move_items(user):
+        _cart = Cart.objects.filter(user=user)
+        _cart_items = _cart.values('pk', 'product__pk', 'product__name', 'product__image', 'product__price',
+                                           'qtty')
+        cart_items = list(map(lambda item: {**item, 'cost': item['product__price'] * item['qtty']}, _cart_items))
+        _cart.delete()
+        return cart_items
+
+    @staticmethod
     def delete_items(user):
         Cart.objects.filter(user=user).delete()
-
