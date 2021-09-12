@@ -1,7 +1,9 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.cache import cache
 from django.conf import settings
+from django.template.loader import render_to_string
 
 from .models import Product, ProductCategory
 
@@ -112,6 +114,44 @@ def product_list(request, pk=0, page=1):
     }
 
     return render(request, 'mainapp/product_list.html', context)
+
+
+def product_list_ajax(request, pk=0, page=1):
+    title = 'каталог'
+    menu_items = get_links_menu()
+
+    if pk == 0:
+        category = {
+            'pk': 0,
+            'name': 'Все',
+        }
+        products = get_products()
+    else:
+        category = get_category(pk)
+        products = get_products_in_category_ordered_by_price(pk)
+
+    paginator = Paginator(products, 3)
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+
+    context = {
+        'title': title,
+        'menu_items': menu_items,
+        'products': products_paginator,
+        'category': category,
+    }
+
+    result = render_to_string(
+        'mainapp/includes/inc_product_list_content',
+        context=context,
+        request=request
+    )
+
+    return JsonResponse({'result': result})
 
 
 def product_details(request, pk=None):
