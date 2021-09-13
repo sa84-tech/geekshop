@@ -146,7 +146,7 @@ def product_list_ajax(request, pk=0, page=1):
     }
 
     result = render_to_string(
-        'mainapp/includes/inc_product_list_content',
+        'mainapp/includes/inc_product_list_content.html',
         context=context,
         request=request
     )

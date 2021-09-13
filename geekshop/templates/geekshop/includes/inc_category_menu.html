@@ -4,7 +4,7 @@
         <li>
             <a
                 href="{% url 'products:category' 0 %}"
-                class="{% if category.pk == 0 %}active{% endif %}"
+                class="{% if category.pk == 0 %}active{% endif %} menu_category"
             >
                 Все
             </a>
@@ -14,14 +14,11 @@
         <li>
             <a
                 href="{% url 'products:category' item.id %}"
-                class="{% if category.pk == item.id %}active{% endif %}"
+                class="{% if category.pk == item.id %}active{% endif %} menu_category"
             >
                 {{item.name}}
             </a>
         </li>
         {% endfor %}
-
-
     </ul>
-
 </div>

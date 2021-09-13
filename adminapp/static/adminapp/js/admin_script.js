@@ -480,7 +480,6 @@ const admin = {
         const object = this[`${this.currentPage}`];
         const url = `${this.url}${object.url_read}${id}`;
         const response = await this.fetchData(url);
-        console.log(response)
         if (!response.error) {
             object.setObjectsList(response.objects);
             this.renderHTML(object.getObjectsListHTML());

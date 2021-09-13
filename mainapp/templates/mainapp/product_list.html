@@ -13,9 +13,15 @@
 
 <section class="main mt-4">
     <div class="base-container main_wrapper">
-        {% include 'mainapp/includes/inc_product_list_content.html' %}
+        {% if request.resolver_match.view_name != 'products:ajax' %}
+            {% include 'mainapp/includes/inc_product_list_content.html' %}
+        {% endif %}
     </div>
 </section>
-
+{% if request.resolver_match.view_name == 'products:ajax' %}
+    <script src="{% static 'geekshop/js/products_list.js' %}"></script>
+{% endif %}
 <div class="clr"></div>
+
+
 {% endblock %}

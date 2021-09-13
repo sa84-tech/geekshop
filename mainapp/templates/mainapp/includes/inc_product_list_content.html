@@ -41,7 +41,7 @@
     <div class="col-auto">
         <div class="paginator list-group list-group-horizontal">
             {% if products.has_previous %}
-            <a class="list-group-item" href="{% url 'products:page' category.pk products.previous_page_number %}">
+            <a class="list-group-item nav_prev_page" href="{% url 'products:page' category.pk products.previous_page_number %}">
                 <
             </a>
             {% else %}
@@ -54,7 +54,7 @@
             {{ products.paginator.num_pages }}
             </span>
             {% if products.has_next %}
-            <a class="list-group-item" href="{% url 'products:page' category.pk products.next_page_number %}">
+            <a class="list-group-item nav_next_page" href="{% url 'products:page' category.pk products.next_page_number %}">
                 >
             </a>
             {% else %}
