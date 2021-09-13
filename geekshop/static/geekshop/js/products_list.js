@@ -6,7 +6,7 @@ const products = {
 
     init() {
         this.mainBlock.addEventListener('click', this.onMainBlockClick.bind(this));
-        this.displyaProductList();
+        this.displayProductsList();
     },
 
 
@@ -16,26 +16,25 @@ const products = {
             event.preventDefault();
             const category_id = event.target.href.split('/').reverse()[1];
             this.current_category = category_id;
-            this.displyaProductList();
+            this.displayProductsList();
         }
         else if (event.target.classList.contains('nav_prev_page')) {
             event.preventDefault();
             const page = +document.querySelector('.current').textContent.trim().split(' ')[1];
-            this.displyaProductList(page - 1);
+            this.displayProductsList(page - 1);
         }
         else if (event.target.classList.contains('nav_next_page')) {
             event.preventDefault();
             const page = +document.querySelector('.current').textContent.trim().split(' ')[1];
-            this.displyaProductList(page + 1);
+            this.displayProductsList(page + 1);
         }
     },
 
-    async displyaProductList(page = null) {
-        let url = `/products/category/${this.current_category}/`;
-        url += page ? `page/${page}/ajax/` : 'ajax/';
+    async displayProductsList(page = null) {
+        const url = page ?
+                    `/products/category/${this.current_category}/page/${page}/ajax/` :
+                    `/products/category/${this.current_category}/ajax/`;
         const response = await this.fetchData(url);
-        console.log("🚀 ~ file: products_list.js ~ line 32 ~ displyaProductList ~ url", url)
-        // console.log("🚀 ~ file: products.js ~ line 37 ~ displyaProductList ~ response", response.result)
         if (!response.error) {
             this.renderHTML(response.result);
         }
@@ -62,7 +61,6 @@ const products = {
     async fetchData(url, options = null) {
         const response = await fetch(url, options);
         if (response.ok) {
-            console.log("🚀 ~ file: products_list.js ~ line 53 ~ fetchData ~ response", response)
             const json = await response.json();
             return json;
         }

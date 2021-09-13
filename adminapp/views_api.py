@@ -1,3 +1,6 @@
+from django.db import connection
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -12,9 +15,24 @@ from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 
 
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductCategory)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.product_set.update(is_active=True)
+        else:
+            instance.product_set.update(is_active=False)
+        db_profile_by_type(sender, 'UPDATE', connection.queries)
+
+
 @user_passes_test(lambda u: u.is_superuser)
 def index(request):
-
     return render(request, 'adminapp/base.html', {'title': 'Панель администрироваия'})
 
 
