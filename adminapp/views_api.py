@@ -1,4 +1,5 @@
 from django.db import connection
+from django.db.models import F
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.http import HttpResponseRedirect, JsonResponse
@@ -159,6 +160,11 @@ def category_update(request, pk):
     cur_category = get_object_or_404(ProductCategory, pk=pk)
     if request.method == 'POST':
         category_form = ProductCategoryEditForm(request.POST, instance=cur_category)
+        if 'discount' in category_form.cleaned_data.keys():
+            discount = category_form.cleaned_data['discount']
+            if discount:
+                cur_category.product_set.update(price=F('price') * (1 - discount / 100))
+                db_profile_by_type(ProductCategory, 'UPDATE', connection.queries)
         if category_form.is_valid():
             category_form.save()
             return JsonResponse({'is_valid': category_form.is_valid()})
