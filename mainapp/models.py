@@ -80,7 +80,7 @@ class Product(models.Model):
 
     @staticmethod
     def get_items():
-        return Product.objects.all()
+        return Product.objects.filter(is_active=True)
 
     @staticmethod
     def get_popular_products():

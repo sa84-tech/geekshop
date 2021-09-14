@@ -31,7 +31,7 @@ SECRET_KEY = env('SECRET_KEY')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 

@@ -38,6 +38,7 @@ const cart = {
 
     async fetchData(url, options=null) {
         const response = await fetch(url, options);
+        console.log('*** fetchData ***', response)
         return response.json();
     },
 
