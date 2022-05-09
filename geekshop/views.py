@@ -1,12 +1,11 @@
 from django.shortcuts import render
 
-from geekshop.utils import get_data
+from mainapp.models import Product, Contact
 
 
 def index(request):
     title = 'магазин'
-
-    products = get_data('products')[-2:]
+    products = Product.objects.all()[3:]
 
     context = {
         'title': title,
@@ -19,8 +18,7 @@ def index(request):
 
 def contacts(request):
     title = 'контакты'
-
-    contact_list = get_data('contacts')
+    contact_list = Contact.objects.all()
 
     context = {
         'title': title,

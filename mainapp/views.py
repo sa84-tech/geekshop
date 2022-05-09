@@ -1,15 +1,17 @@
 from django.shortcuts import render
 
-from geekshop.utils import get_data
+from .models import Product, ProductCategory, Contact
 
 
-def index(request):
-
+def index(request, pk=None):
+    print(pk)
     title = 'каталог'
+    menu_items = ProductCategory.objects.all()
 
-    menu_items = get_data('categories')
-
-    products = get_data('products')[:3]
+    if pk:
+        products = Product.objects.filter(category_id=pk)[:3]
+    else:
+        products = Product.objects.all()[:3]
 
     context = {
         'title': title,
