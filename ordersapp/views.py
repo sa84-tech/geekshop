@@ -24,7 +24,7 @@ class OrdersList(LoginRequiredMixin, ListView):
 @receiver(pre_save, sender=OrderItem)
 @receiver(pre_save, sender=Cart)
 def product_qtty_update_save(sender, update_fields, instance, **kwargs):
-    if update_fields is 'qtty' or 'product':
+    if update_fields == 'qtty' or 'product':
         if instance.pk:
             instance.product.qtty -= instance.qtty - sender.get_item(instance.pk).qtty
         else:
@@ -51,18 +51,16 @@ class OrderItemsCreate(LoginRequiredMixin, CreateView):
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
-            cart_items = Cart.objects.filter(user=self.request.user)
+            # cart_items = Cart.objects.filter(user=self.request.user)
+            cart_items = Cart.move_items(self.request.user)
             if len(cart_items):
                 OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=len(cart_items))
                 formset = OrderFormSet()
                 for num, form in enumerate(formset.forms):
-                    form.initial['product'] = cart_items[num].product
-                    form.initial['qtty'] = cart_items[num].qtty
-                    form.initial['price'] = cart_items[num].product.price
-                    # cart_items[num].delete()
-                data['total_cost'] = Cart.total(self.request.user)
-                data['total_qtty'] = Cart.count(self.request.user)
-                cart_items.delete()
+                    form.initial['product'] = cart_items[num]['product__pk']
+                    form.initial['qtty'] = cart_items[num]['qtty']
+                    form.initial['price'] = cart_items[num]['product__price']
+                # Cart.delete_items(self.request.user)
             else:
                 formset = OrderFormSet()
 

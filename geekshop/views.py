@@ -6,13 +6,13 @@ from mainapp.models import Product, Contact
 
 def index(request):
     title = 'магазин'
-    popular_products = Product.objects.all().order_by('price')[:3]
-    new_products = Product.objects.all().order_by('-id')[:3]
+    # popular_products = Product.objects.all().order_by('price')[:3]
+    # new_products = Product.objects.all().order_by('-id')[:3]
 
     context = {
         'title': title,
-        'popular_products': popular_products,
-        'new_products': new_products,
+        'popular_products': Product.get_popular_products(),
+        'new_products': Product.get_new_products(),
     }
 
     # print(request.resolver_match)

@@ -1,6 +1,8 @@
 from django.db import models
 
 from django.conf import settings
+from django.utils.functional import cached_property
+
 from mainapp.models import Product
 
 
@@ -66,20 +68,36 @@ class Order(models.Model):
     def __str__(self):
         return f'Текущий заказ: {self.id}'
 
-    def get_total_qtty(self):
-        items = self.orderitems.select_related()
+    # @property
+    @cached_property
+    def get_related_cached(self):
+        return self.orderitems.select_related()
 
-    def get_product_type_qtty(self):
-        items = self.orderitems.select_related()
-        return len(items)
+    def get_total_qtty(self):
+        _items = self.get_related_cached
+        return sum(list(map(lambda x: x.qtty, _items)))
 
     def get_total_cost(self):
-        items = self.orderitems.select_related()
+        _items = self.get_related_cached
+        return sum(list(map(lambda x: x.qtty * x.product.price, _items)))
 
-        return sum(list(map(lambda x: x.qtty * x.product.price, items)))
+    def get_summary(self):
+        _items = self.get_related_cached
+        return {
+            'total_cost': sum(list(map(lambda x: x.qtty * x.product.price, _items))),
+            'total_qtty': sum(list(map(lambda x: x.qtty, _items))),
+            'updated': self.updated,
+            'created': self.created,
+            'items': _items,
+        }
+
+    def get_product_type_qtty(self):
+        _items = self.get_related_cached
+        return len(_items)
 
     def delete(self):
-        for item in self.orderitems.select_related():
+        _items = self.get_related_cached
+        for item in _items:
             item.product.qtty += item.qtty
             item.product.save()
 

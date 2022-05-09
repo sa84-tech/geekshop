@@ -1,71 +1,71 @@
- <div class="col-md-8">
-	 <h2>Корзина</h2>
+<div class="col-md-8">
+    <h2>Корзина</h2>
 
-	 <ul id="cart-list" class="list-group list-group-flush">
-		{% for cart_item in cart_items %}
-			<li class="list-group-item" data-pk="{{ cart_item.product }}">
-				<div class="row">
-					<div class="col-md-2">
-						<img class="img-fluid" src="/media/{{ cart_item.product__image }}" alt="">
-					</div>
-					<div class="col-md-4">
-						{{ cart_item.product__name|capfirst }}
-					</div>
-					<div class="col-md-2 qtty-block">
-						<div class="qtty-block__change sub-btn mx-2"
-						>
-							&ndash;
-						</div>
-							<div class="qtty-block__value">
-								<input
-								 type="text"
-								 class="form-control border-0 p-0 text-center"
-								 value="{{ cart_item.qtty }}"
-								>
-							</div>
-							<div
-								class="qtty-block__change mx-2 add-btn"
-							>
-								+
-							</div>
-					</div>
-					<div class="col-md-2">{{ cart_item.cost }}<span>&#8381;</span></div>
-					<div class="col-md-2">
-					    <div
-					        class="trash-block remove-btn qtty-block__remove"
-					    >
-						    <i class="far fa-trash-alt qtty-block__remove"></i>
-					    </div>
-				    </div>
-				</div>
-			</li>
-		 {% endfor %}
+    <ul id="cart-list" class="list-group list-group-flush">
+        {% for cart_item in cart_items %}
+        <li class="list-group-item" data-pk="{{ cart_item.product__pk }}">
+            <div class="row">
+                <div class="col-md-2">
+                    <img class="img-fluid" src="/media/{{ cart_item.product__image }}" alt="">
+                </div>
+                <div class="col-md-4">
+                    {{ cart_item.product__name|capfirst }}
+                </div>
+                <div class="col-md-2 qtty-block">
+                    <div class="qtty-block__change sub-btn mx-2"
+                    >
+                        &ndash;
+                    </div>
+                    <div class="qtty-block__value">
+                        <input
+                                type="text"
+                                class="form-control border-0 p-0 text-center"
+                                value="{{ cart_item.qtty }}"
+                        >
+                    </div>
+                    <div
+                            class="qtty-block__change mx-2 add-btn"
+                    >
+                        +
+                    </div>
+                </div>
+                <div class="col-md-2">{{ cart_item.cost }}<span>&#8381;</span></div>
+                <div class="col-md-2">
+                    <div
+                            class="trash-block remove-btn qtty-block__remove"
+                    >
+                        <i class="far fa-trash-alt qtty-block__remove"></i>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
 
-	 </ul>
- </div>
+    </ul>
+</div>
 
- <div class="col-md-4">
-	 <div class="card">
-		 <ul id="totalPrice" class="list-group">
-			 <li class="list-group-item">
-				 <h4 class="h5">
-					 Всего товаров <span id="total_qtty">{{ count }}
+<div class="col-md-4">
+    <div class="card">
+        <ul id="totalPrice" class="list-group">
+            <li class="list-group-item">
+                <h4 class="h5">
+                    Всего товаров <span id="total_qtty">{{ count }}
 					 </span> на сумму <span id="total_cost">{{ total_cost }}</span>
-					 <span>&#8381;</span>
-				 </h4>
-			 </li>
-			 <li class="list-group-item">
-				 <button
-					 type="button"
-					 class="btn btn-secondary"
-					 onclick="location.href='{% url 'ordersapp:order_create' %}'"
-				 >
-					 Оформить заказ
-				 </button>
-			 </li>
-		 </ul>
-	 </div>
- </div>
+                    <span>&#8381;</span>
+                </h4>
+            </li>
+            <li class="list-group-item">
+                <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="location.href='{% url 'ordersapp:order_create' %}'"
+                >
+                    Оформить заказ
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
 
 
 
