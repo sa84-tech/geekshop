@@ -4,6 +4,28 @@
         <li><a href="{% url 'index' %}" class="{% if title == 'магазин' %}active{% endif %}">домой</a></li>
         <li><a href="{% url 'products:index' %}" class="{% if title == 'каталог' %}active{% endif %}">продукты</a></li>
         <li><a href="{% url 'contacts' %}" class="{% if title == 'контакты' %}active{% endif %}">контакты</a></li>
+
+        <li class="auth">
+            {% if user.is_authenticated %}
+                <div class="dropdown">
+                  <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ user.first_name|default:'Пользователь' }}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <li><a class="dropdown-item" href="{% url 'auth:edit' %}">Профиль</a></li>
+                    <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Выход</a></li>
+                      {% if user.is_staff %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/admin/">Админ</a></li>
+                      {% endif %}
+                  </ul>
+                </div>
+            {% else %}
+                <a href="{% url 'auth:login' %}">войти</a>
+            {% endif %}
+        </li>
+
+
     </ul>
     <a href="#" class="search"></a>
     <a href="#" class="basket"></a>

@@ -1,0 +1,16 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <form class="" action="{% url 'auth:register' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <ul class="list-group">
+            {{ register_form.as_ul }}
+        </ul>
+
+        <br>
+        <input class="form-control btn btn-primary" type="submit" value="Зарегистрироваться">
+    </form>
+
+{% endblock %}
