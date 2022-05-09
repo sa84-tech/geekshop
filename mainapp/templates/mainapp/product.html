@@ -1,5 +1,6 @@
 {% extends 'geekshop/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
 	<div class="header">
@@ -15,7 +16,7 @@
 			<div class="details-products row mb-3">
 				<div class="details-slider col-md-6">
 					<div class="slider-product">
-						<img src="/media/{{ product.image }}">
+						<img class="img-fluid" src="{{ product.image|media_folder_products }}">
 					</div>
 				</div>
 

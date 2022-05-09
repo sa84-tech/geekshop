@@ -10,7 +10,6 @@ from authapp.forms import ShopUserRegisterForm, ShopUserEditForm
 from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 
-
 # @user_passes_test(lambda u: u.is_superuser)
 # def user_create(request):
 #     title = 'Пользователи/создание'
@@ -31,6 +30,7 @@ from mainapp.models import ProductCategory, Product
 #
 #     return render(request, 'adminapp/user_update.html', context)
 
+
 class UserCreateView(LoginRequiredMixin, CreateView):
     model = ShopUser
     template_name = 'adminapp/user_update.html'
@@ -42,7 +42,6 @@ class UserCreateView(LoginRequiredMixin, CreateView):
         title = 'Пользователи/создание'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def users(request):
@@ -70,7 +69,6 @@ class UserListView(LoginRequiredMixin, ListView):
         title = 'админка / пользователи'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def user_update(request, pk):
@@ -105,7 +103,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         title = 'Пользователи/редактирование'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def user_delete(request, pk):
@@ -147,7 +144,6 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context.update({'title': title, 'url_values': url_values})
         return context
 
-
 # @user_passes_test(lambda u: u.is_superuser)
 # def category_create(request):
 #     title = 'Категории/создание'
@@ -181,7 +177,6 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         context.update({'title': title})
         return context
 
-
 # @user_passes_test(lambda u: u.is_superuser)
 # def categories(request):
 #     title = 'Панель управления/категории'
@@ -204,14 +199,13 @@ class CategoryListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         print(self.kwargs)
-        return ProductCategory.objects.all().order_by('name')
+        return ProductCategory.objects.all().order_by('-is_active', 'name')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CategoryListView, self).get_context_data()
         title = 'Панель администрирование/категории'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def category_update(request, pk):
@@ -246,7 +240,6 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
         title = 'Категории/редактирование'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def category_delete(request, pk):
@@ -285,7 +278,6 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
         url_values = {'get': 'admin_staff:categories', 'post': 'admin_staff:category_delete'}
         context.update({'title': title, 'url_values': url_values})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_create(request, pk):
@@ -328,7 +320,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         context.update({'title': title})
         return context
 
-
 # @user_passes_test(lambda u: u.is_superuser)
 # def products(request, pk):
 #     title = 'Панель администрирование/продукт'
@@ -350,7 +341,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         print(self.kwargs)
-        return Product.objects.filter(category__pk=self.kwargs['pk']).order_by('name')
+        return Product.objects.filter(category__pk=self.kwargs['pk']).order_by('-is_active', 'name')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data()
@@ -358,7 +349,6 @@ class ProductListView(LoginRequiredMixin, ListView):
         category = get_object_or_404(ProductCategory, pk=self.kwargs['pk'])
         context.update({'title': title, 'category': category})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_read(request, pk):
@@ -372,6 +362,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 #
 #     return render(request, 'adminapp/product_read.html', context)
 
+
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'adminapp/product_read.html'
@@ -382,7 +373,6 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         title = 'продукты/подробнее'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_update(request, pk):
@@ -425,7 +415,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         title = 'Продукты/редактирование'
         context.update({'title': title})
         return context
-
 
 # @user_passes_test(lambda u: u.is_superuser)
 # def product_delete(request, pk):

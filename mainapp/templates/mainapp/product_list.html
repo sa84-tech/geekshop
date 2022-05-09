@@ -1,5 +1,6 @@
 {% extends 'geekshop/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
 <div class="header">
@@ -10,7 +11,7 @@
     </div>
 </div>
 
-<section class="main">
+<section class="main mt-4">
     <div class="base-container">
         {% include 'geekshop/includes/inc_category_menu.html' %}
 
@@ -24,7 +25,7 @@
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                     <div class="my-3 p-3 rounded card">
                         <a href="{% url 'products:product' product.id %}">
-                            <img class="card-img-top" src="/media/{{ product.image }}" alt="">
+                            <img class="card-img-top" src="{{ product.image|media_folder_products }}" alt="">
                         </a>
                         <div class="card-body">
                             <a href="{% url 'products:product' product.id %}">

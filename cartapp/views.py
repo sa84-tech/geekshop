@@ -5,8 +5,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 
 from cartapp.models import Cart
+from mainapp.context_processors import get_total, get_count
 from mainapp.models import Product
-from geekshop.views import get_count, get_total
 
 
 def _add_cart(user, product_id):
@@ -26,14 +26,10 @@ def index(request, pk=None):
     if pk:
         _add_cart(request.user, pk)
 
-    product_count = get_count(request.user)
-    total_cost = get_total(request.user)
     cart_items = Cart.get_cart(request.user)
 
     context = {
         'title': title,
-        'count': product_count,
-        'total_cost': total_cost,
         'cart_items': cart_items,
     }
 
