@@ -57,6 +57,10 @@ class Product(models.Model):
         verbose_name='количество на складе',
         default=0,
     )
+    is_active = models.BooleanField(
+        verbose_name='активен',
+        default=True
+    )
 
     def __str__(self):
         return self.name

@@ -3,22 +3,25 @@
     <ul class="links-menu">
         <li>
             <a
-                href="{% url 'products:index' %}"
-                class="{% if not request.resolver_match.kwargs.pk %}active{% endif %}"
+                href="{% url 'products:category' 0 %}"
+                class="{% if category.pk == 0 %}active{% endif %}"
             >
                 Все
             </a>
         </li>
+
         {% for item in menu_items %}
-            <li>
-                <a
-                    href="{% url 'products:category' item.id %}"
-                    class="{% if request.resolver_match.kwargs.pk == item.id %}active{% endif %}"
-                >
-                    {{item.name}}
-                </a>
-            </li>
+        <li>
+            <a
+                href="{% url 'products:category' item.id %}"
+                class="{% if category.pk == item.id %}active{% endif %}"
+            >
+                {{item.name}}
+            </a>
+        </li>
         {% endfor %}
+
+
     </ul>
 
 </div>

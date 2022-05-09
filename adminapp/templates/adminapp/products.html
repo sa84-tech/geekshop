@@ -1,5 +1,6 @@
 {% extends 'adminapp/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
 <main>
@@ -38,19 +39,26 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        {% for object in objects %}
-                        <tr>
-                            <td><img class="img-fluid" src="/media/{{ object.image }}" alt=""></a></td>
+                        {% for object in object_list %}
+                        <tr
+                                {% if not object.is_active %}
+                                class="text-secondary"
+                                style="--bs-text-opacity: .5;"
+                                {% endif %}
+                        >
+                            <td><img class="img-fluid" src="{{ object.image|media_folder_products }}" alt=""></a></td>
                             <td>{{ object.name }}</a></td>
                             <td>{{ object.short_desc }}</td>
                             <td>{{ object.price }}</td>
                             <td>{{ object.quantity }}</td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-outline-secondary">
-                                    <a href="{% url 'admin_staff:product_read' object.pk %}">
-                                        подробнее
-                                    </a>
-                                </button>
+                                <a
+                                    href="{% url 'admin_staff:product_read' object.pk %}"
+                                    class="btn btn-outline-secondary {% if not object.is_active %}disabled{% endif %}"
+                                    role="button" tabindex="-1"
+                                >
+                                    подробнее
+                                </a>
                             </td>
                             <td class="text-center">
 
@@ -61,11 +69,16 @@
                                 </button>
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-outline-secondary">
-                                    <a href="{% url 'admin_staff:product_delete' object.pk %}">
+
+                                <a href="{% url 'admin_staff:product_delete' object.pk %}">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        {% if object.is_active %}
                                         удалить
-                                    </a>
-                                </button>
+                                        {% else %}
+                                        восстановить
+                                        {% endif %}
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
