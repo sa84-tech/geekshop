@@ -1,0 +1,101 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Категории</h1>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Категории
+            </div>
+            <div class="card-body">
+
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Категория</th>
+                            <th>Описание</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Категория</th>
+                            <th>Описание</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+
+                        {% for object in objects %}
+                        <tr
+                            {% if not object.is_active %}
+                                class="text-secondary"
+                                style="--bs-text-opacity: .5;"
+                            {% endif %}
+                        >
+                            <td class="">
+                                {{ object.name|title }}
+                            </td>
+                            <td class="">
+                                {{ object.description|title }}
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'admin_staff:products' object.pk %}">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        товары категории
+                                    </button>
+                                </a>
+                            </td>
+                            <td class="text-center">
+
+                                <a href="{% url 'admin_staff:category_update' object.pk %}">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        редактировать
+                                    </button>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                {% if object.is_active %}
+                                <a href="{% url 'admin_staff:category_delete' object.pk %}">
+                                    <button type="button" class="btn btn-outline-secondary">
+                                        удалить
+                                    </button>
+                                </a>
+                                {% else %}
+                                    <a href="{% url 'admin_staff:category_restore' object.pk %}">
+                                        <button type="button" class="btn btn-outline-secondary">
+                                            восстановить
+                                        </button>
+                                    </a>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                        {% endfor%}
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'admin_staff:category_create' %}">
+                    <button class="btn btn-primary">
+                        Создать категорию
+                    </button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

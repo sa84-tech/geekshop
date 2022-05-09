@@ -16,7 +16,10 @@
                     <li><a class="dropdown-item inline-block" href="{% url 'auth:logout' %}">Выход</a></li>
                       {% if user.is_staff %}
                         <li><hr class="dropdown-divider inline-block"></li>
-                        <li><a class="dropdown-item inline-block" href="/admin/">Админ</a></li>
+                        <li><a class="dropdown-item inline-block" href="{% url 'admin_staff:users' %}">Менеджер</a></li>
+                        {% if user.is_superuser %}
+                            <li><a class="dropdown-item inline-block" href="/admin/">Админ</a></li>
+                        {% endif %}
                       {% endif %}
                   </ul>
                 </div>
