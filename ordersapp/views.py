@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import F
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
 from django.forms import inlineformset_factory
@@ -26,7 +27,8 @@ class OrdersList(LoginRequiredMixin, ListView):
 def product_qtty_update_save(sender, update_fields, instance, **kwargs):
     if update_fields == 'qtty' or 'product':
         if instance.pk:
-            instance.product.qtty -= instance.qtty - sender.get_item(instance.pk).qtty
+            instance.product.qtty = F('qtty') - (instance.qtty - sender.get_item(instance.pk).qtty)
+            # instance.product.qtty -= instance.qtty - sender.get_item(instance.pk).qtty
         else:
             instance.product.qtty -= instance.qtty
         instance.product.save()
@@ -35,7 +37,8 @@ def product_qtty_update_save(sender, update_fields, instance, **kwargs):
 @receiver(pre_delete, sender=OrderItem)
 @receiver(pre_delete, sender=Cart)
 def product_qtty_update_delete(sender, instance, **kwargs):
-    instance.product.qtty += instance.qtty
+    # instance.product.qtty += instance.qtty
+    instance.product.qtty = F('qtty') + instance.qtty
     instance.product.save()
 
 
