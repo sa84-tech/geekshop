@@ -2,43 +2,105 @@
 {% load static %}
 
 {% block content %}
-	<div class="slider">
-		{% include 'geekshop/includes/inc_main_menu.html' %}
-		<div class="text-slider">
-			<h3 class="green">тенденции</h3>
-			<h3 class="big"> удобные стулья</h3>
-			<p>Новый уровень комфорта. Отличные характеристики.</p>
-			<a href="#" class="button-order">заказать <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
-		</div>
-		<div class="navi">
-			<a href="#"></a><a href="#"></a><a href="#"></a>
+	<div class="header">
+		<div class="base-container">
+			<div class="slider">
+				{% include 'geekshop/includes/inc_main_menu.html' %}
+				<div class="text-slider">
+					<h3 class="green">тенденции</h3>
+					<h3 class="big"> удобные стулья</h3>
+					<p>Новый уровень комфорта. Отличные характеристики.</p>
+					<a href="{% url 'products:index' %}" class="button-order">
+						заказать
+						<img src="{% static 'geekshop/img/arrow.png' %}" alt="">
+					</a>
+				</div>
+				<div class="navi">
+					<a href="#"></a><a href="#"></a><a href="#"></a>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<div class="featured">
-		<div class="featured-menu">
-				<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
+	<div class="container">
+		<div class="row my-2 featured_menu_links">
+			<div class="col-2 featured-menu">
+				<a class="popular_products-link active" href="#tab_content_1">Популярные</a>
+			</div>
+			<div class="col-2 featured-menu">
+				<a href="#tab_content_2" class="new_products-link">Новинки</a>
+			</div>
 		</div>
-		<a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
-		<div class="clearfix">
-		</div>
-		<div class="tab-content">
 
-			{% for product in products %}
-				<div class="block">
-					<a href="#"><img src="/media/{{ product.image }}" alt="">
-						<div class="text">
-							<h3>{{ product.category.name }}</h3>
-							<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
-							<h4>{{ product.name|capfirst }}</h4>
-							<p>{{ product.description }}</p>
-						</div>
-					</a>
-				</div>
+		<div id="tab_content_1" class="row justify-content-start mb-5 tab-content popular_products">
+
+			{% for product in popular_products %}
+
+			<div class="block mb-2">
+				<a href="{% url 'products:product' product.id %}">
+					<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+					<div class="text">
+						<p>{{ product.category.name }}</p>
+						<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+						<h4>{{ product.name|capfirst }}</h4>
+						<p>{{ product.short_desc }}</p>
+					</div>
+				</a>
+			</div>
+
 			{% endfor %}
 
 		</div>
+
+		<div id="tab_content_2" class="row justify-content-start mb-5 tab-content new_products d-none">
+
+			{% for product in new_products %}
+
+			<div class="block mb-2">
+				<a href="{% url 'products:product' product.id %}">
+					<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+					<div class="text">
+						<p>{{ product.category.name }}</p>
+						<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+						<h4>{{ product.name|capfirst }}</h4>
+						<p>{{ product.short_desc }}</p>
+					</div>
+				</a>
+			</div>
+
+			{% endfor %}
+		</div>
+
 	</div>
 
+	{% comment %}
+	<section class="featured">
+		<div class="base-container">
+			<div class="featured-menu">
+				<a class="active" href="#">Популярные</a><a href="#">Новинки</a>
+			</div>
+			<a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
+			<div class="clearfix">
+			</div>
+			<div class="tab-content">
+
+				{% for product in products %}
+				<div class="block mb-2">
+						<a href="{% url 'products:product' product.id %}">
+							<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+							<div class="text">
+								<p>{{ product.category.name }}</p>
+								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
+								<h4>{{ product.name|capfirst }}</h4>
+								<p>{{ product.short_desc }}</p>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</section>
+	{% endcomment %}
 	<div class="clr"></div>
 {% endblock %}

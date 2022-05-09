@@ -25,6 +25,11 @@ class Cart(models.Model):
         auto_now_add=True,
     )
 
+    @property
+    def product_cost(self):
+        print(self.product.price * self.qty)
+        return self.product.price * self.qty
+
     @staticmethod
     def count(user):
         items = list(user.cart.values('qty'))
@@ -34,3 +39,9 @@ class Cart(models.Model):
     def total(user):
         items = list(user.cart.values('qty', 'product__price'))
         return reduce(lambda summ, item: summ + item['qty'] * item['product__price'], items, 0)
+
+    @staticmethod
+    def get_cart(user):
+        cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qty')
+        cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qty']}, cart)
+        return list(cart_items)

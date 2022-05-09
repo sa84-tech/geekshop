@@ -2,7 +2,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing: content-box !important;
+	box-sizing: border-box;
 }
 
 body {
@@ -13,14 +13,24 @@ html, body {
 	height: 100%;
 }
 
-.clr {
-	height: 384px;
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 .base-container {
 	width: 1366px;
 	margin: 0 auto;
-	min-height: 100%;
+	box-sizing: content-box !important;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex: 0 0 auto;
 }
 
 .slider {
@@ -285,7 +295,6 @@ a.inline-block: {
 	line-height: 24px;
 	text-align: center;
 	float: right;
-	margin-top: 138px;
 	letter-spacing: 3px;
 	text-decoration: none;
 }
@@ -313,11 +322,10 @@ a.inline-block: {
 	height: 268px;
 	width: 268px;
 	background-color: #ffffff;
-    opacity: 0.9;
+    opacity: 0.7;
     position: absolute;
     top: 0;
     text-align: center;
-    border: 1px solid #9c9c9c;
 }
 .tab-content a .text h4 {
 	color:  #212121;
@@ -584,15 +592,13 @@ a.inline-block: {
 }
 
 .base-footer {
-
 	height: 384px;
-	width: 1169px;
 	background-color: #f7f7f7;
 	padding-left: 99px;
 	padding-right: 98px;
-	margin: -384px auto 0;
 	clear: both;
 }
+
 .base-footer form {
 	position: relative;
 }
@@ -683,6 +689,7 @@ td:first-child {
 	border-color:  #6c6c6c;
 	border-style: solid;
 }
+
 .base-footer .small {
 	text-transform: uppercase;
 	float: left;
@@ -701,12 +708,11 @@ td:first-child {
 	margin-left: 158px;
 	margin-top: 30px;
 }
-.social1{
+.social1 {
 	background: url(img/social-links.png);
 	height: 28px;
 	width: 28px;
 	float: left;
-
 }
 .social2{
 	background: url(img/social-links.png);
@@ -936,17 +942,18 @@ td:first-child {
 	padding-left: 98px;
 	padding-right: 98px;
 	margin-top: 98px;
-	height: 651px; 
 }
 .details-slider {
 	width: 570px;
 	float: left;
 	margin-right: 30px;
 }
+/*
 .slider-product {
 	width: 570px;
 	height: 570px;
 }
+*/
 .slider-control {
 	width: 420px;
 	height: 70px;
@@ -979,31 +986,19 @@ td:first-child {
 	padding-left: 35px
 }
 .description .big-bold {
-	/*text-transform: capitalize;*/
+    text-transform: uppercase;
 	color:  #212121;
 	font-size: 36px;
 	font-weight: 700;
-	text-align: center;
-	margin-top: 47px;
-	margin-bottom: 0px;
-}
-.description .red {
-	text-transform: uppercase;
-	color: #e53935;
-	font-size: 18px;
-	font-weight: 700;
-	text-align: center;
-	letter-spacing: 1px;
-	line-height: 17px;
-	margin-top: 23px;
+	line-height: 4rem;
 	margin-bottom: 36px;
 }
+
 .description .price {
 	color:  #212121;
 	font-size: 72px;
 	font-weight: 300;
 	line-height: 48px;
-	text-align: center;
 }
 .description .price span {
 	color:  #212121;
@@ -1031,10 +1026,10 @@ td:first-child {
 	letter-spacing: 6px;
 	margin-top: 31px;
 }
-.red-button:hover {
-	box-shadow: none;
-}
+
+.red-button:hover,
 .red-button:active {
+    color:  #ffffff;
 	box-shadow: none;
 	background-color: #d41306;
 }
@@ -1051,22 +1046,91 @@ td:first-child {
 	margin-bottom: 0.5em;
 }
 
+
 .related {
 	padding: 0px 98px;
 }
 .related .title {
-	height: 343px;
+	height: 2rem;
 	margin-right: 0;
 }
 .related .title h2 {
-	margin-top: 245px;
+margin-top: 0;
 }
 .related .title .explore {
-	margin-top: 262px;
+	margin-top: 0;
 }
 .related-products {
 	margin-bottom: 120px;
 }
+
+.related-products .block a img {
+
+}
+.related-products .block {
+
+	margin-right: 30px;
+	display: block;
+	height: 370px;
+	width: 370px;
+	position: relative;
+}
+.related-products .block:nth-child(3n) {
+	margin-right: 0px;
+}
+.related-products a .text {
+	display: none;
+	height: 368px;
+	width: 368px;
+	background-color: #ffffff;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    border: 1px solid #9c9c9c;
+}
+.related-products a .text h4 {
+	color:  #212121;
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 30px;
+	text-align: center;
+}
+.related-products a .text p {
+	color:  #6c6c6c;
+	font-size: 20px;
+	font-weight: 300;
+	text-align: center;
+	margin: 15px 15px;
+}
+.related-products a .text img {
+	float: none;
+	margin-top: 80px;
+}
+.related-products a:hover .text{
+	display: block;
+}
+
+
+/*
+
+.related {
+	padding: 0px 98px;
+}
+.related .title {
+	height: 2rem;
+	margin-right: 0;
+}
+.related .title h2 {
+margin-top: 0;
+}
+.related .title .explore {
+	margin-top: 0;
+}
+.related-products {
+	margin-bottom: 120px;
+}
+
 .related-products .block a img {
 	float: left;
 }
@@ -1115,6 +1179,8 @@ td:first-child {
 }
 
 
+
+*/
 .catalog {
 	padding: 0px 98px;
 }

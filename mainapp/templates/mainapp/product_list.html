@@ -2,12 +2,17 @@
 {% load static %}
 
 {% block content %}
-	<div class="hero-white">
-		{% include 'geekshop/includes/inc_main_menu.html' %}
+	<div class="header">
+		<div class="base-container">
+			<div class="hero-white">
+				{% include 'geekshop/includes/inc_main_menu.html' %}
+			</div>
+		</div>
 	</div>
 
 	<section class="main">
-		{% include 'geekshop/includes/inc_category_menu.html' %}
+		<div class="base-container">
+			{% include 'geekshop/includes/inc_category_menu.html' %}
 
 		<div class="catalog">
 			<div class="title clearfix">
@@ -18,26 +23,31 @@
 				{% for product in products %}
 				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
 					<div class="my-3 p-3 rounded card">
-						<a href="#"><img class="card-img-top" src="/media/{{ product.image }}" alt=""></a>
+						<a href="{% url 'products:product' product.id %}">
+							<img class="card-img-top" src="/media/{{ product.image }}" alt="">
+						</a>
 						<div class="card-body">
-							<a href="#">
+							<a href="{% url 'products:product' product.id %}">
 								<div class="card-title">
 									<strong>{{ product.name|capfirst }}</strong>
 								</div>
 							</a>
 							<h3 class="card-text">{{ product.price }} <span>&#8381;</span> </h3>
+							{% comment %}
 							<btn
 								onclick="location.href='{% url 'cart:add' product.pk %}'"
 								class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
 							>
 								<i class="fa fa-cart-plus"></i>
 							</btn>
+							{% endcomment %}
 						</div>
 					</div>
 				</div>
 				{% endfor %}
 
 			</div>
+		</div>
 		</div>
 	</section>
 

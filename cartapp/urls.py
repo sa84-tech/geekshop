@@ -1,11 +1,11 @@
 from django.urls import path
 
-from cartapp.views import index, cart_add, cart_remove
+from cartapp.views import index, cart_edit
 
 app_name = 'cartapp'
 
 urlpatterns = [
-    path('', index, name='view'),
-    path('add/<int:pk>/', cart_add, name='add'),
-    path('remove/<int:pk>/', cart_remove, name='remove'),
+    path('', index, name='index'),
+    path('<int:pk>', index, name='index'),
+    path('edit/<int:pk>/<int:qty>', cart_edit, name='edit'),
 ]

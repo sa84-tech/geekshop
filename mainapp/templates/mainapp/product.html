@@ -2,74 +2,65 @@
 {% load static %}
 
 {% block content %}
-	<div class="hero-white">
-		{% include 'geekshop/includes/inc_main_menu.html' %}
+	<div class="header">
+		<div class="base-container">
+			<div class="hero-white">
+				{% include 'geekshop/includes/inc_main_menu.html' %}
+			</div>
+		</div>
 	</div>
 
 	<div class="details">
-		{% include 'geekshop/includes/inc_category_menu.html' %}
-		<div class="details-products">
-			<div class="details-slider">
-				<div class="slider-product">
-					<img src="{% static 'geekshop/img/slider1.jpg' %}">
+		<div class="base-container">
+			<div class="details-products row mb-3">
+				<div class="details-slider col-md-6">
+					<div class="slider-product">
+						<img src="/media/{{ product.image }}">
+					</div>
 				</div>
-				<div class="slider-control">
-					<div class="block">
-						<a href="#"><img src="{% static 'geekshop/img/controll.jpg' %}" alt="">
-							<div class="text"></div>
-						</a>
-					</div>
-					<div class="block">
-						<a href="#"><img src="{% static 'geekshop/img/controll1.jpg' %}" alt="">
-							<div class="text"></div>
-						</a>
-					</div>
-					<div class="block">
-						<a href="#"><img src="{% static 'geekshop/img/controll2.jpg' %}" alt="">
-							<div class="text"></div>
-						</a>
+
+				<div class="description col-md-6">
+					<h3 class="big-bold">{{ product.name }}</h3>
+					<p class="price">{{ product.price }}<span>руб</span></p>
+					<a href="{% url 'cart:index' product.pk %}" class="red-button">
+						заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+					</a>
+					<div class="description-text">
+						{% for desc in product.split_description %}
+							<p>{{ desc|capfirst }}</p>
+						{% endfor %}
 					</div>
 				</div>
 			</div>
 
-			<div class="description">
-				<h3 class="big-bold">Отличный стул</h3>
-				<h3 class="red">горячее предложение</h3>
-				<p class="price"> 2585.9 <span>руб</span></p>
-				<a href="#" class="red-button">
-					заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
-				</a>
-				<div class="description-text">
-					<p>Расположитесь комфортно.</p>
-					<p>Отличное качество материалов
-					позволит вам это.</p>
-					<p>Различные цвета</p>
-					<p>высочайший уровень
-					эргономики и прочность.</p>
+			<div class="container">
+				<div class="row my-2">
+					<h2 class="col-6">Похожие продукты</h2>
+					<a class="col-6 text-end explore" href="{% url 'products:index' %}">
+						показать все
+						<img src="{% static 'geekshop/img/arrow.png' %}" alt="">
+					</a>
 				</div>
-			</div>
-		</div>
 
-		<div class="related">
-			<div class="title clearfix">
-				<h2>Похожие продукты</h2>
-				<a class="explore" href="#">показать все <img src="{% static 'geekshop/img/arrow.png' %}" alt=""></a>
-			</div>
-			<div class="related-products clearfix">
+				<div class="row justify-content-start mb-5 tab-content">
 
-				{% for product in products %}
-					<div class="block">
-						<a href="#"><img src="/media/{{ product.image }}" alt="">
+					{% for product in products %}
+
+					<div class="block mb-2">
+						<a href="{% url 'products:product' product.id %}">
+							<img class="img-fluid" src="/media/{{ product.image }}" alt="">
 							<div class="text">
-								<h3>{{ product.category.name }}</h3>
+								<p>{{ product.category.name }}</p>
 								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
 								<h4>{{ product.name|capfirst }}</h4>
-								<p>{{ product.description }}</p>
+								<p>{{ product.short_desc }}</p>
 							</div>
 						</a>
 					</div>
-				{% endfor %}
 
+					{% endfor %}
+
+				</div>
 			</div>
 		</div>
 	</div>

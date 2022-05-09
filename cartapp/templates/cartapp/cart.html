@@ -1,0 +1,22 @@
+{% extends 'cartapp/base.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="header">
+		<div class="base-container">
+			<div class="hero-white">
+				{% include 'geekshop/includes/inc_main_menu.html' %}
+			</div>
+		</div>
+	</div>
+
+	<section class="main">
+		<div class="container">
+			<div id="cart-wrapper" class="row py-5">
+			{% include 'cartapp/includes/inc_cart_items.html' %}
+			</div>
+		</div>
+	</section>
+
+	<div class="clr"></div>
+{% endblock %}
