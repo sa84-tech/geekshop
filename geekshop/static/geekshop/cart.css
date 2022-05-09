@@ -1,15 +1,15 @@
-.qty-block {
+.qtty-block {
     display: flex;
     justify-content: left;
     align-items: start;
 }
 
-.qty-block__value {
+.qtty-block__value {
     padding: 0 4px;
     border-bottom: 1px solid gray;
 }
 
-.qty-block__change {
+.qtty-block__change {
     width: 24px;
     height: 24px;
     text-align: center;

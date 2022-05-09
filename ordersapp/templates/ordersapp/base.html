@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'geekshop/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'geekshop/forms.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'adminapp/css/admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'ordersapp/css/orders.css' %}">
     {% endblock %}
 
     {% block js %}
@@ -23,7 +24,7 @@
     {% endblock %}
 </head>
 <body>
-<div class="order_container">
+<div id="order-wrapper">
     {% block content %}
     {% endblock %}
 </div>

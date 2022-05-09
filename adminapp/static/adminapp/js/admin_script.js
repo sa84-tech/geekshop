@@ -251,7 +251,7 @@ const products = {
             <td>${object.name}</td>
             <td>${object.short_desc}</td>
             <td>${object.price}</td>
-            <td>${object.quantity}</td>
+            <td>${object.qtty}</td>
             <td class="text-center">
                 <button type="button" class="btn btn-outline-secondary btn__details" data-key="${
                     object.id
