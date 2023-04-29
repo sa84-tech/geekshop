@@ -29,7 +29,10 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='auth')),
     path('cart/', include('cartapp.urls', namespace='cart')),
     path('', include('social_django.urls', namespace='social')),
+<<<<<<< HEAD
     path('order/', include('ordersapp.urls', namespace='order'), name='order')
+=======
+>>>>>>> main
 ]
 
 if settings.DEBUG:
