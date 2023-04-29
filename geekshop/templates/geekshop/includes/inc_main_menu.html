@@ -13,7 +13,7 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <li><a class="dropdown-item inline-block" href="{% url 'auth:edit' %}">Профиль</a></li>
-                    <li><a class="dropdown-item inline-block" href="{#% url 'ordersapp:orders' %}">Заказы</a></li>
+                    <li><a class="dropdown-item inline-block" href="{% url 'ordersapp:orders_list' %}">Заказы</a></li>
                     <li><a class="dropdown-item inline-block" href="{% url 'auth:logout' %}">Выход</a></li>
                       {% if user.is_staff %}
                         <li><hr class="dropdown-divider inline-block"></li>

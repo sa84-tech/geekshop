@@ -11,12 +11,12 @@ from mainapp.models import Product
 
 def _add_cart(user, product_id):
     product = get_object_or_404(Product, pk=product_id)
+    if product.qtty >= 1:
+        cart, create = Cart.objects.get_or_create(user=user, product=product)
+        if not create:
+            cart.qtty += 1
 
-    cart, create = Cart.objects.get_or_create(user=user, product=product)
-    if not create:
-        cart.qty += 1
-
-    cart.save()
+        cart.save()
     return cart
 
 
@@ -37,11 +37,12 @@ def index(request, pk=None):
 
 
 @login_required
-def cart_edit(request, pk, qty):
-    print(pk, qty)
+def cart_edit(request, pk, qtty):
+    print(f'controller: cart_edit, params - pk: {pk}, qtty: {qtty}')
     cart = request.user.cart.get(product=pk)
-    if qty > 0:
-        cart.qty = int(qty)
+    # print(f'Product id: {cart.product.pk}: Prev qtty: {cart.product.qtty}')
+    if qtty > 0:
+        cart.qtty = int(qtty)
         cart.save()
     else:
         cart.delete()

@@ -4,9 +4,20 @@ from django.db import models
 from django.conf import settings
 
 from mainapp.models import Product
+from ordersapp.models import OrderItem
+
+
+# class CartQuerySet(models.QuerySet):
+#     def delete(self, *args, **kwargs):
+#         for object in self:
+#             object.product.qtty += object.qtty
+#             object.product.save()
+#         super(CartQuerySet, self).delete(*args, **kwargs)
 
 
 class Cart(models.Model):
+    # objects = CartQuerySet.as_manager()
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -16,7 +27,7 @@ class Cart(models.Model):
         Product,
         on_delete=models.CASCADE,
     )
-    qty = models.PositiveIntegerField(
+    qtty = models.PositiveIntegerField(
         verbose_name='количество',
         default=1,
     )
@@ -25,23 +36,40 @@ class Cart(models.Model):
         auto_now_add=True,
     )
 
+    @staticmethod
+    def get_item(pk):
+        return Cart.objects.filter(pk=pk).first()
+
     @property
     def product_cost(self):
-        print(self.product.price * self.qty)
-        return self.product.price * self.qty
+        print(self.product.price * self.qtty)
+        return self.product.price * self.qtty
 
     @staticmethod
     def count(user):
-        items = list(user.cart.values('qty'))
-        return reduce(lambda summ, item: summ + item['qty'], items, 0)
+        items = list(user.cart.values('qtty'))
+        return reduce(lambda summ, item: summ + item['qtty'], items, 0)
 
     @staticmethod
     def total(user):
-        items = list(user.cart.values('qty', 'product__price'))
-        return reduce(lambda summ, item: summ + item['qty'] * item['product__price'], items, 0)
+        items = list(user.cart.values('qtty', 'product__price'))
+        return reduce(lambda summ, item: summ + item['qtty'] * item['product__price'], items, 0)
 
     @staticmethod
     def get_cart(user):
-        cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qty')
-        cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qty']}, cart)
+        cart = user.cart.values('pk', 'product', 'product__name', 'product__image', 'product__price', 'qtty')
+        cart_items = map(lambda item: {**item, 'cost': item['product__price'] * item['qtty']}, cart)
         return list(cart_items)
+
+    # def save(self, *args, **kwargs):
+    #     if self.pk:
+    #         self.product.qtty -= self.qtty - self.__class__.get_item(self.pk).qtty
+    #     else:
+    #         self.product.qtty -= self.qtty
+    #     self.product.save()
+    #     super(self.__class__, self).save(*args, **kwargs)
+    #
+    # def delete(self, *args, **kwargs):
+    #     self.product.qtty += self.qtty
+    #     self.product.save()
+    #     super(self.__class__, self).delete(*args, **kwargs)

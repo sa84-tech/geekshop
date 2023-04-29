@@ -251,7 +251,7 @@ const products = {
             <td>${object.name}</td>
             <td>${object.short_desc}</td>
             <td>${object.price}</td>
-            <td>${object.quantity}</td>
+            <td>${object.qtty}</td>
             <td class="text-center">
                 <button type="button" class="btn btn-outline-secondary btn__details" data-key="${
                     object.id
@@ -480,6 +480,7 @@ const admin = {
         const object = this[`${this.currentPage}`];
         const url = `${this.url}${object.url_read}${id}`;
         const response = await this.fetchData(url);
+        console.log(response)
         if (!response.error) {
             object.setObjectsList(response.objects);
             this.renderHTML(object.getObjectsListHTML());
@@ -570,7 +571,7 @@ const admin = {
         }
     },
 
-    onMainBlockClick(event) {
+    onMainBlockClicked(event) {
         const target = event.target;
         if (target.classList.contains('btn')) {
             if (target.classList.contains('btn__remove')) {
@@ -627,7 +628,10 @@ const admin = {
     
     async fetchData(url, options = null) {
         const response = await fetch(url, options);
-        if (response.ok) return response.json();
+        if (response.ok) {
+            const json = await response.json();
+            return json;
+        }
         else {
             this.renderErrorAlert(response);
             return { error: true, objects: [] };
