@@ -16,7 +16,6 @@ def _add_cart(user, product_id):
         cart, create = Cart.objects.get_or_create(user=user, product=product)
         if not create:
             cart.qtty += 1
-            # cart.qtty = F('qtty') + 1
         cart.save()
     return cart
 
@@ -44,7 +43,6 @@ def cart_add(request, pk):
 
     cart, create = Cart.objects.get_or_create(user=request.user, product=product)
     if not create:
-        # cart.qtty += 1
         cart.qtty = F('qtty') + 1
 
     cart.save()
@@ -56,7 +54,6 @@ def cart_add(request, pk):
 def cart_edit(request, pk, qtty):
     print(f'controller: cart_edit, params - pk: {pk}, qtty: {qtty}')
     cart = request.user.cart.get(product=pk)
-    # print(f'Product id: {cart.product.pk}: Prev qtty: {cart.product.qtty}')
     if qtty > 0:
         cart.qtty = int(qtty)
         cart.save()

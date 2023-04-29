@@ -82,7 +82,6 @@ def get_products_in_category_ordered_by_price(pk):
 
 def product_list(request, pk=0, page=1):
     title = 'каталог'
-    # menu_items = ProductCategory.objects.filter(is_active=True)
     menu_items = get_links_menu()
 
     if pk == 0:
@@ -90,11 +89,8 @@ def product_list(request, pk=0, page=1):
             'pk': 0,
             'name': 'Все',
         }
-        # products = Product.objects.filter(is_active=True, category__is_active=True)
         products = get_products()
     else:
-        # category = get_object_or_404(ProductCategory, pk=pk)
-        # products = Product.objects.filter(category_id=pk, is_active=True, category__is_active=True)
         category = get_category(pk)
         products = get_products_in_category_ordered_by_price(pk)
 
@@ -158,13 +154,11 @@ def product_details(request, pk=None):
     title = 'каталог'
 
     if pk:
-        # product = get_object_or_404(Product, pk=pk)
         product = get_product(pk)
         products = list(Product.objects.filter(category_id=product.category)
                         .exclude(pk=pk)
                         .values_list('pk', 'image', 'category__name', 'name', 'short_desc', ))[:3]
     else:
-        # products = Product.objects.all()[:3]
         products = get_products()[:3]
     context = {
         'title': title,

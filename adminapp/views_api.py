@@ -2,13 +2,10 @@ from django.db import connection
 from django.db.models import F
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
-from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, RedirectView
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from adminapp.forms import ProductCategoryEditForm, ProductEditForm
 from authapp.forms import ShopUserRegisterForm, ShopUserEditForm

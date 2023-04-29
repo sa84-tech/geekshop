@@ -222,14 +222,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/auth/login/'
 
-DOMAIN_NAME = env.str('DJANGO_DOMAIN_NAME', default='http://localhost')
+DOMAIN_NAME = env.str('DJANGO_DOMAIN_NAME', default='http://localhost:8000')
 
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default='email_user')
-EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default='Admin00')
-EMAIL_PORT = env.str('EMAIL_PORT', default='2525')
-EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=False)
-EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = 'tmp/email-messages/'
+else:
+    EMAIL_HOST = env.str('EMAIL_HOST')
+    EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = env.str('EMAIL_PORT')
+    EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=False)
+    EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = env('SOCIAL_AUTH_VK_OAUTH2_KEY', default='')
 SOCIAL_AUTH_VK_OAUTH2_SECRET = env('SOCIAL_AUTH_VK_OAUTH2_SECRET', default='')

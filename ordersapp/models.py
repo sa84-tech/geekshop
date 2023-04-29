@@ -1,17 +1,8 @@
-from django.db import models
-
 from django.conf import settings
+from django.db import models
 from django.utils.functional import cached_property
 
 from mainapp.models import Product
-
-
-# class OrderItemQuerySet(models.QuerySet):
-#     def delete(self, *args, **kwargs):
-#         for object in self:
-#             object.product.qtty += object.qtty
-#             object.product.save()
-#         super(OrderItemQuerySet, self).delete(*args, **kwargs)
 
 
 class Order(models.Model):
@@ -68,7 +59,6 @@ class Order(models.Model):
     def __str__(self):
         return f'Текущий заказ: {self.id}'
 
-    # @property
     @cached_property
     def get_related_cached(self):
         return self.orderitems.select_related()
@@ -106,7 +96,6 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    # objects = OrderItemQuerySet.as_manager()
 
     order = models.ForeignKey(
         Order,
@@ -131,9 +120,3 @@ class OrderItem(models.Model):
 
     def get_product_cost(self):
         return self.product.price * self.qtty
-
-    # def delete(self):
-    #     self.product.qtty += self.qtty
-    #     self.product.save()
-    #
-    #     super(self.__class__, self).delete()

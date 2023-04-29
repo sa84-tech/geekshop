@@ -24,7 +24,6 @@ class TestUserManagement(TestCase):
         self.assertTrue(response.context['user'].is_anonymous)
         self.assertEqual(response.context['title'], 'магазин')
         self.assertNotContains(response, 'Пользователь', status_code=200)
-        # self.assertNotIn('Пользователь', response.content.decode())
 
         self.client.login(username='test_user_1', password='p@$$w0rd')
         response = self.client.get('/auth/login/')
@@ -33,7 +32,6 @@ class TestUserManagement(TestCase):
         response = self.client.get('/')
         self.assertContains(response, 'Пользователь', status_code=200)
         self.assertEqual(response.context['user'], self.user)
-        # self.assertIn('Пользователь', response.content.decode())
 
     def test_cart_login_redirect(self):
 
@@ -44,7 +42,6 @@ class TestUserManagement(TestCase):
         self.client.login(username='test_user_2', password='p@$$w0rd')
         response = self.client.get('/cart/')
         self.assertEqual(response.status_code, 200)
-        # self.assertEqual(list(response.content.decode()['cart']), [])
         self.assertEqual(response.request['PATH_INFO'], '/cart/')
         self.assertIn('Тестов', response.content.decode())
 

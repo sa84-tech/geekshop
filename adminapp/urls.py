@@ -19,7 +19,6 @@ urlpatterns = [
 
     path('api/products/create/category/<int:pk>/', adminapp_api.product_create, name='api_product_create'),
     path('api/products/read/category/<int:pk>/', adminapp_api.products, name='api_products'),
-    # path('products/read/<int:pk>/', adminapp.product_read, name='product_read'),
     path('api/products/update/<int:pk>/', adminapp_api.product_update, name='api_product_update'),
     path('api/products/delete/<int:pk>/', adminapp_api.product_delete, name='api_product_delete'),
 ]

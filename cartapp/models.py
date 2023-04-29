@@ -7,17 +7,7 @@ from mainapp.models import Product
 from ordersapp.models import OrderItem
 
 
-# class CartQuerySet(models.QuerySet):
-#     def delete(self, *args, **kwargs):
-#         for object in self:
-#             object.product.qtty += object.qtty
-#             object.product.save()
-#         super(CartQuerySet, self).delete(*args, **kwargs)
-
-
 class Cart(models.Model):
-    # objects = CartQuerySet.as_manager()
-
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

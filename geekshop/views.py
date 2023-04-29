@@ -6,8 +6,6 @@ from mainapp.models import Product, Contact
 
 def index(request):
     title = 'магазин'
-    # popular_products = Product.objects.all().order_by('price')[:3]
-    # new_products = Product.objects.all().order_by('-id')[:3]
 
     context = {
         'title': title,
@@ -15,7 +13,6 @@ def index(request):
         'new_products': Product.get_new_products(),
     }
 
-    # print(request.resolver_match)
     return render(request, 'geekshop/index.html', context)
 
 
