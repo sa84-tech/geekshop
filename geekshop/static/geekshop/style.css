@@ -1233,3 +1233,12 @@ margin-top: 0;
 .auth {
     margin-left: 2rem;
 }
+
+.paginator a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.paginator a:hover {
+    opacity: 0.5;
+}

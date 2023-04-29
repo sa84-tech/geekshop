@@ -7,11 +7,11 @@
     ],
     "products": [
         {
-            "name": "дизайнерский светильник Аркадий",
+            "name": "дизайнерский светильник",
             "category": "дом",
             "image": "products_images/product-11.jpg",
             "short_desc": "освещение",
-            "description": "гравное, что светит хорошо; со временем привыкаешь; Дизайнер - художник, он так видит;",
+            "description": "Светильник для дома",
             "price": "15500.00",
             "qtty": 10
         },
@@ -29,30 +29,30 @@
             "category": "классика",
             "image": "products_images/product-31.jpg",
             "short_desc": "освещение",
-            "description": "Идеально для нетребовательных покупателей;повседневность и обыденность",
+            "description": "Торшер в классическом стиле",
             "price": "11000.00",
             "qtty": 10
         },
         {
-            "name": "лампа декоративная Попутчица",
+            "name": "лампа декоративная",
             "category": "дом",
             "image": "products_images/product-1.jpg",
-            "short_desc": "не оторваться",
-            "description": "Осветит путь;Подарит смысл жизни;Поддержит в трудную минуту;",
+            "short_desc": "Декоративная настольная лампа",
+            "description": "Лампа настольная, светодиодная",
             "price": "1550.00",
             "qtty": 10
         },
         {
-            "name": "комплект стульев Недотрога",
+            "name": "комплект стульев",
             "category": "модерн",
             "image": "products_images/product-2.jpg",
-            "short_desc": "знакомы стулья",
+            "short_desc": "Стоклья для дома",
             "description": "Комплект из 12 стульев;",
             "price": "25350.00",
             "qtty": 10
         },
         {
-            "name": "Современный чайник",
+            "name": "Чайник электрический",
             "category": "классика",
             "image": "products_images/product-3.jpg",
             "short_desc": "новые технологии",
@@ -63,34 +63,34 @@
         {
             "name": "Лампа настольная",
             "category": "офис",
-            "image": "products_images/product-2-sm.jpg",
-            "short_desc": "не оторваться",
-            "description": "Можно брать в поездку; ",
+            "image": "products_images/desk-lamp.jpg",
+            "short_desc": "Лампа для офиса",
+            "description": "Современная настольная лампа",
             "price": "5550.00",
             "qtty": 10
         },
         {
-            "name": "Кусок ткани",
+            "name": "Компьютерное кресло",
             "category": "модерн",
-            "image": "products_images/product-1-lg.jpg",
-            "short_desc": "начни свое дело",
-            "description": "на все случаи жизни; никогда не подведет; ",
-            "price": "5550.00",
+            "image": "products_images/computer-chair.png",
+            "short_desc": "Компьютерное кресло (стул) Ultra T",
+            "description": "Регулировка высоты-газлифт 3-й категори подлокотники с удобным наклоном для рук; обивка сиденья и спинки экокожей и акриловой ткань-сеткой;",
+            "price": "15550.00",
             "qtty": 10
         },
         {
-            "name": "Диван незабудка",
+            "name": "Удобный диван",
             "category": "офис",
             "image": "products_images/product-3-sm.jpg",
-            "short_desc": "диван",
-            "description": "удобный и практичный; помнит все; легко чистится ",
+            "short_desc": "диван для офиса",
+            "description": "Диван имеет функцию сна, контейнер для постельных принадлежностей и автоматический подъемник; В диване используются пружины Bonell, гарантирующие комфортность отдыха;",
             "price": "5550.00",
             "qtty": 10
         },
         {
             "name": "Стул офисный",
             "category": "дом",
-            "image": "products_images/product-4.jpg",
+            "image": "products_images/office-chair.jpg",
             "short_desc": "стул",
             "description": "Итальянский дизайн; Современные материалы; Российская действительность;",
             "price": "5550.00",

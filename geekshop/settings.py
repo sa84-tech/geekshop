@@ -11,12 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from environs import Env
 
-import environ
 
-
-env = environ.Env()
-environ.Env.read_env()
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-$sg@8aegwaa=vk-iza3cfi-3d!==+gsr-=h($+r%k9t)-c#wkz'
-SECRET_KEY = env('SECRET_KEY')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+SECRET_KEY = env.str('DJANGO_SECRET',
+                     default='django-insecure-$sg@8aegwaa=vk-iza3cfi-3d!==+gsr-=h($+r%k9t)-c#wkz')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default='email_user')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,20 +44,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mainapp',
-    'authapp',
-    'cartapp',
-    'adminapp',
-<<<<<<< HEAD
-    'ordersapp',
-=======
->>>>>>> main
+
+    # 3rd party
     'corsheaders',
     'social_django',
-
     'debug_toolbar',
     'template_profiler_panel',
     'django_extensions',
+
+    # local
+    'mainapp.apps.MainappConfig',
+    'authapp.apps.AuthappConfig',
+    'cartapp.apps.CartappConfig',
+    'adminapp.apps.AdminappConfig',
+    'ordersapp.apps.OrdersappConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +72,11 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+])
 
 if DEBUG:
     def show_toolbar(request):
@@ -147,15 +151,8 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-    # 'default': {
-    #     'NAME': 'geekshop',
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'USER': 'postgres',
-    # }
+    'default': env.dj_db_url("DJANGO_DB_URL",
+                             default=f"sqlite:///{BASE_DIR}/db.sqlite3")
 }
 
 
@@ -204,7 +201,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 STATICFILES_DIRS = (
    os.path.join(BASE_DIR, "geekshop", "static"),
@@ -225,30 +222,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/auth/login/'
 
-# DOMAIN_NAME = 'http://185.46.11.18'
-
-DOMAIN_NAME = 'http://127.0.0.1'
+DOMAIN_NAME = env.str('DJANGO_DOMAIN_NAME', default='http://localhost')
 
 EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = '2525'
-EMAIL_USE_SSL = False
-EMAIL_USE_TLS = False
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default='email_user')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default='Admin00')
+EMAIL_PORT = env.str('EMAIL_PORT', default='2525')
+EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=False)
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=False)
 
-# вариант python -m smtpd -n -c DebuggingServer localhost:25 # EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
-
-# вариант логирования сообщений почты в виде файлов вместо отправки
-# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-# EMAIL_FILE_PATH = 'tmp/email-messages/'
-
-CORS_ORIGIN_WHITELIST = [
-    "http://185.46.11.18:80",
-    "http://127.0.0.1:8000",
-]
-
-SOCIAL_AUTH_VK_OAUTH2_KEY = env('SOCIAL_AUTH_VK_OAUTH2_KEY')
-SOCIAL_AUTH_VK_OAUTH2_SECRET = env('SOCIAL_AUTH_VK_OAUTH2_SECRET')
+SOCIAL_AUTH_VK_OAUTH2_KEY = env('SOCIAL_AUTH_VK_OAUTH2_KEY', default='')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = env('SOCIAL_AUTH_VK_OAUTH2_SECRET', default='')
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 if os.name == 'posix':
@@ -263,3 +247,5 @@ if os.name == 'posix':
     }
 
 LOW_CACHE = True
+
+AUTH_USER_MODEL = 'authapp.ShopUser'
