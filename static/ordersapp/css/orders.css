@@ -1,0 +1,7 @@
+td.td1.formset_td {
+    min-width: 40% !important;
+}
+
+td.td2.formset_td {
+    width: 100px !important;
+}
