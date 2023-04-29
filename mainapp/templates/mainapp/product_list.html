@@ -12,73 +12,16 @@
 </div>
 
 <section class="main mt-4">
-    <div class="base-container">
-        {% include 'geekshop/includes/inc_category_menu.html' %}
-
-        <div class="catalog">
-            <div class="title clearfix">
-                <h2>Каталог</h2>
-            </div>
-            <div class="row justify-content-center">
-
-                {% for product in products %}
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                    <div class="my-3 p-3 rounded card">
-                        <a href="{% url 'products:product' product.id %}">
-                            <img class="card-img-top" src="{{ product.image|media_folder_products }}" alt="">
-                        </a>
-                        <div class="card-body">
-                            <a href="{% url 'products:product' product.id %}">
-                                <div class="card-title">
-                                    <strong>{{ product.name|capfirst }}</strong>
-                                </div>
-                            </a>
-                            <h3 class="card-text">{{ product.price }} <span>&#8381;</span></h3>
-                            {% comment %}
-                            <btn
-                                    onclick="location.href='{% url 'cart:add' product.pk %}'"
-                                    class="btn btn-secondary position-absolute bottom-0 end-0 m-2"
-                            >
-                                <i class="fa fa-cart-plus"></i>
-                            </btn>
-                            {% endcomment %}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-3 mb-5">
-        <div class="col-auto">
-            <div class="paginator list-group list-group-horizontal">
-            {% if products.has_previous %}
-                <a class="list-group-item" href="{% url 'products:page' category.pk products.previous_page_number %}">
-                    <
-                </a>
-            {% else %}
-                <div class="list-group-item" style="cursor: pointer;">
-                    <span style="opacity: 0.4;"><</span>
-                </div>
-            {% endif %}
-            <span class="current list-group-item">
-            страница {{ products.number }} из
-            {{ products.paginator.num_pages }}
-            </span>
-            {% if products.has_next %}
-                <a class="list-group-item" href="{% url 'products:page' category.pk products.next_page_number %}">
-                    >
-                </a>
-            {% else %}
-                <div class="list-group-item" style="cursor: pointer;">
-                    <span style="opacity: 0.4;">></span>
-                </div>
-            {% endif %}
-        </div>
-        </div>
+    <div class="base-container main_wrapper">
+        {% if request.resolver_match.view_name != 'products:ajax' %}
+            {% include 'mainapp/includes/inc_product_list_content.html' %}
+        {% endif %}
     </div>
 </section>
-
+{% if request.resolver_match.view_name == 'products:ajax' %}
+    <script src="{% static 'geekshop/js/products_list.js' %}"></script>
+{% endif %}
 <div class="clr"></div>
+
+
 {% endblock %}

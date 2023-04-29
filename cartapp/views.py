@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -15,7 +16,7 @@ def _add_cart(user, product_id):
         cart, create = Cart.objects.get_or_create(user=user, product=product)
         if not create:
             cart.qtty += 1
-
+            # cart.qtty = F('qtty') + 1
         cart.save()
     return cart
 
@@ -34,6 +35,21 @@ def index(request, pk=None):
     }
 
     return render(request, 'cartapp/cart.html', context)
+
+
+def cart_add(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('auth:login'))
+    product = get_object_or_404(Product, pk=pk)
+
+    cart, create = Cart.objects.get_or_create(user=request.user, product=product)
+    if not create:
+        # cart.qtty += 1
+        cart.qtty = F('qtty') + 1
+
+    cart.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 @login_required

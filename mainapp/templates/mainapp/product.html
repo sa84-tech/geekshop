@@ -45,16 +45,16 @@
 
 				<div class="row justify-content-start mb-5 tab-content">
 
-					{% for product in products %}
+					{% for product_item in products %}
 
 					<div class="block mb-2">
-						<a href="{% url 'products:product' product.id %}">
-							<img class="img-fluid" src="/media/{{ product.image }}" alt="">
+						<a href="{% url 'products:product' product_item.0 %}">
+							<img class="img-fluid" src="/media/{{ product_item.1 }}" alt="">
 							<div class="text">
-								<p>{{ product.category.name }}</p>
+								<p>{{ product_item.2 }}</p>
 								<img src="{% static 'geekshop/img/icon-hover.png' %}" alt="img">
-								<h4>{{ product.name|capfirst }}</h4>
-								<p>{{ product.short_desc }}</p>
+								<h4>{{ product_item.3|capfirst }}</h4>
+								<p>{{ product_item.4 }}</p>
 							</div>
 						</a>
 					</div>

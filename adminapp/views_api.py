@@ -1,3 +1,7 @@
+from django.db import connection
+from django.db.models import F
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -12,9 +16,24 @@ from authapp.models import ShopUser
 from mainapp.models import ProductCategory, Product
 
 
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductCategory)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.product_set.update(is_active=True)
+        else:
+            instance.product_set.update(is_active=False)
+        db_profile_by_type(sender, 'UPDATE', connection.queries)
+
+
 @user_passes_test(lambda u: u.is_superuser)
 def index(request):
-
     return render(request, 'adminapp/base.html', {'title': 'Панель администрироваия'})
 
 
@@ -141,6 +160,11 @@ def category_update(request, pk):
     cur_category = get_object_or_404(ProductCategory, pk=pk)
     if request.method == 'POST':
         category_form = ProductCategoryEditForm(request.POST, instance=cur_category)
+        if 'discount' in category_form.cleaned_data.keys():
+            discount = category_form.cleaned_data['discount']
+            if discount:
+                cur_category.product_set.update(price=F('price') * (1 - discount / 100))
+                db_profile_by_type(ProductCategory, 'UPDATE', connection.queries)
         if category_form.is_valid():
             category_form.save()
             return JsonResponse({'is_valid': category_form.is_valid()})

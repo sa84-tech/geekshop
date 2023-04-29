@@ -78,6 +78,20 @@ class Product(models.Model):
         descriptions = self.description.split(';')
         return list(map(lambda s: s.strip(), descriptions))
 
+    @staticmethod
+    def get_items():
+        return Product.objects.filter(is_active=True)
+
+    @staticmethod
+    def get_popular_products():
+        _items = Product.get_items()
+        return list(_items.order_by('price').values())[:3]
+
+    @staticmethod
+    def get_new_products():
+        _items = Product.get_items()
+        return list(_items.order_by('-id').values())[:3]
+
 
 class Contact(models.Model):
     location = models.CharField(
